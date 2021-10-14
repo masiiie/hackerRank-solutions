@@ -24,9 +24,6 @@ class Result
     public static void miniMaxSum(List<int> arr)
     {
         int sum = arr.Sum();
-        int[] sums = new int[5]{sum, sum, sum, sum, sum};
-        //Array.Populate(sums, sum);
-        
         
         for(int i=0; i< arr.Count; i++)
         {
