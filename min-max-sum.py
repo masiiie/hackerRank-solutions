@@ -11,10 +11,9 @@ import sys
 #
 
 def miniMaxSum(arr):
-    misum = 
-    _sum = np.sum(arr)
-    maxsum = _sum - np.min(arr)
-    minsum = _sum - np.max(arr)
+    _sum = sum(arr)
+    maxsum = _sum - min(arr)
+    minsum = _sum - max(arr)
     print("{0} {1}".format(minsum, maxsum))
 
 if __name__ == '__main__':
