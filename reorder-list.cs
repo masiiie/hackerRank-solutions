@@ -26,13 +26,15 @@ public class Solution {
                 actualHead.next = null;
                 break;
             }
+
+            ListNode temp = actualHead.next;
+            ListNode top = stack.Pop(); 
+
             if(actualHead.next == top){
                 top.next = null;
                 break;
             }
 
-            ListNode temp = actualHead.next;
-            ListNode top = stack.Pop();
             actualHead.next = top;
             top.next = temp;
             actualHead = temp;
