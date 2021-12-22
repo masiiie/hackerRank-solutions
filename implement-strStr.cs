@@ -7,12 +7,14 @@ public class Solution {
         int index = -1;
         for(int i = 0; i < haystack.Length - needle.Length; i++){
             for(int j = 0; j < needle.Length; j++){
-                if(haystack[i+j]!=needle[j]) break;
+                if(haystack[i+j]==needle[j]) index = i;
+                else{
+                    index = -1;
+                    break;
+                }
             }
-            if(j==needle.Length){
-                index = i;
-                break;
-            }
+
+            if(index!=-1) break;
         }
         return index;
     }
