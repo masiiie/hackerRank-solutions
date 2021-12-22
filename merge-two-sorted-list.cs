@@ -37,5 +37,6 @@ public class Solution {
         }  
 
         actual.next = null; 
+        return actual;
     }
 }
