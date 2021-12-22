@@ -13,6 +13,18 @@
  */
 public class Solution {
     public void ReorderList(ListNode head) {
-        
+        if(head.next == null) return head;
+    }
+
+    public void auxiliarReorder(ListNode head){
+
+    }
+
+    public void recursiveReorder(ListNode first, ListNode last)
+    {
+        ListNode temp = first.next;
+        first.next = last;
+        last.next = temp;
+        return recursiveReorder()
     }
 }
