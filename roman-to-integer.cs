@@ -20,7 +20,7 @@ public class Solution {
                 i+=1;
             }
             else{
-                sol+= values[s[i]]
+                sol+= values[s[i]];
             }
         }
         return sol;
