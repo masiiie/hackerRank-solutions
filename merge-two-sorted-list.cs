@@ -18,11 +18,13 @@ public class Solution {
         while(list1 != null || list2 != null){
             if(list1 == null){
                 actual.val = list2.val;
-                actual.next = list2.next.Copy()
+                actual.next = list2.next;
+                break;
             } 
             else if(list2 == null){
                 actual.val = list1.val;
-                actual.next = list1.next.Copy();
+                actual.next = list1.next;
+                break;
             }
             else if(list1.val < list2.val){
                 actual.val = list1.val;
