@@ -27,7 +27,11 @@ class Result
 
     public static void staircase(int n)
     {
-
+        for(int i=0; i<n; i++){
+            string spaces = new String(' ', n-i-1);
+            string symbols = new String('#', i+1);
+            Console.WriteLine(spaces + symbols);
+        }
     }
 
 }
