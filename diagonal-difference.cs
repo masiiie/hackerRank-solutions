@@ -31,7 +31,18 @@ class Result
         int col1 = 0;
 
         int row2 = 0;
-        int col2 = arr.Count;
+        int col2 = arr.Count - 1;
+
+        for(int i =0; i<arr.Count; i++)
+        {
+            diag1 += arr[row1][col1];
+            diag2 += arr[row2][col2];
+
+            row1 +=1; col1 +=1;
+            row2 +=1; col2 -=1;            
+        }
+
+        return Math.Abs(diag2-diag1);
     }
 
 }
