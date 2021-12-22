@@ -24,7 +24,14 @@ class Result
 
     public static int diagonalDifference(List<List<int>> arr)
     {
+        int diag1 = 0;
+        int diag2 = 0;
 
+        int row1 = 0;
+        int col1 = 0;
+
+        int row2 = 0;
+        int col2 = arr.Count;
     }
 
 }
