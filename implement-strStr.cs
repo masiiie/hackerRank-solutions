@@ -9,7 +9,10 @@ public class Solution {
             for(int j = 0; j < needle.Length; j++){
                 if(haystack[i+j]!=needle[j]) break;
             }
-            if(j==needle.Length) break;
+            if(j==needle.Length){
+                index = i;
+                break;
+            }
         }
         return index;
     }
