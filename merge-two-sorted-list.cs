@@ -20,11 +20,13 @@ public class Solution {
 
         while(list1 != null || list2 != null){
             if(list1 == null){
-                actual = list2;
+                actual.val = list2.val;
+                actual.next = list2.next;
                 return solution;
             } 
             else if(list2 == null){
-                actual = list1;
+                actual.val = list1.val;
+                actual.next = list1.next;
                 return solution;
             }
             else if(list1.val < list2.val){
