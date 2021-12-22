@@ -1,3 +1,6 @@
+// Diagonal difference 😊
+// https://www.hackerrank.com/challenges/diagonal-difference/problem
+
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Collections;
