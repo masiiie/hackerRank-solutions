@@ -13,18 +13,29 @@
  */
 public class Solution {
     public void ReorderList(ListNode head) {
-        if(head.next == null) return head;
-    }
+        Stack<ListNode> stack = new Stack<ListNode>();
+        ListNode last = head;
+        while(last.next != null){
+            stack.Push(last);
+            last = last.next;
+        }
 
-    public void auxiliarReorder(ListNode head){
+        ListNode actualHead = head;
+        while(true){
+            if(actualHead == stack.Peek()){
+                actualHead.next = null;
+                break;
+            }
+            if(actualHead.next == top){
+                top.next = null;
+                break;
+            }
 
-    }
-
-    public void recursiveReorder(ListNode first, ListNode last)
-    {
-        ListNode temp = first.next;
-        first.next = last;
-        last.next = temp;
-        return recursiveReorder()
+            ListNode temp = actualHead.next;
+            ListNode top = stack.Pop();
+            actualHead.next = top;
+            top.next = temp;
+            actualHead = temp;
+        }
     }
 }
