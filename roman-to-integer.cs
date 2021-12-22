@@ -15,7 +15,14 @@ public class Solution {
         int sol = 0;
 
         for(int i=0; i<s.Length; i++){
-
+            if((i+1)<s.Length && values[s[i]]<values[s[i+1]]){
+                sol+= (values[s[i+1]] - values[s[i]]);
+                i+=1;
+            }
+            else{
+                sol+= values[s[i]]
+            }
         }
+        return sol;
     }
 }
