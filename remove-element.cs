@@ -3,10 +3,10 @@
 public class Solution {
     public int RemoveElement(int[] nums, int val) {
         int k = 0;
+        int lastnull = -1;
         for(int i = 0; i<nums.Length; i++){
-            int lastnull = -1;
             if(nums[i] == val){
-                lastnull = i;
+                if(lastnull == -1) lastnull = i;
                 nums[i] = -1;
             }
             else{
