@@ -28,7 +28,12 @@ class Result
 
     public static long aVeryBigSum(List<long> ar)
     {
-
+        int sol = 0;
+        for(int i=0; i < ar.length; i++)
+        {
+            sol+= ar[i];
+        }
+        return sol;
     }
 
 }
