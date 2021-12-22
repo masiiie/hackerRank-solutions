@@ -15,7 +15,8 @@ public class Solution {
     public void ReorderList(ListNode head) {
         Stack<ListNode> stack = new Stack<ListNode>();
         ListNode last = head;
-        while(last.next != null){
+        
+        while(last != null){
             stack.Push(last);
             last = last.next;
         }
