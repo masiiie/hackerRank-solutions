@@ -28,8 +28,8 @@ class Result
 
     public static long aVeryBigSum(List<long> ar)
     {
-        int sol = 0;
-        for(int i=0; i < ar.length; i++)
+        long sol = 0;
+        for(int i=0; i < ar.Count; i++)
         {
             sol+= ar[i];
         }
