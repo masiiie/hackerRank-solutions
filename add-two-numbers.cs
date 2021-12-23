@@ -19,11 +19,11 @@ public class Solution {
         for(int i = 0; i < 100; i++){
             if(l1 == null && l2 == null) break;
             if(l1 != null ){
-                number1 += l1.val*Math.Pow(10,i);
+                number1 += l1.val*Convert.ToInt32(Math.Pow(10,i));
                 l1 = l1.next;
             }
             if(l2 != null){
-                number2 += l2.val*Math.Pow(10,i);
+                number2 += l2.val*Convert.ToInt32(Math.Pow(10,i));
                 l2 = l2.next;
             }
         }
@@ -34,9 +34,11 @@ public class Solution {
         ListNode actual = realActual;
 
         for(int i= sumaString.Length - 1; i > -1; i--){
-            int.TryParse(sumaString[i], actual.val);
+            int.TryParse(sumaString.Substring(i,1), out actual.val);
             actual.next = new ListNode(0);
             actual = actual.next;
         }
+
+        return realActual;
     }
 }
