@@ -27,5 +27,16 @@ public class Solution {
                 l2 = l2.next;
             }
         }
+
+        int suma = number1 + number2;
+        string sumaString = suma.ToString();
+        ListNode realActual = new ListNode(0);        
+        ListNode actual = realActual;
+
+        for(int i= sumaString.Length - 1; i > -1; i--){
+            int.TryParse(sumaString[i], actual.val);
+            actual.next = new ListNode(0);
+            actual = actual.next;
+        }
     }
 }
