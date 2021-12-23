@@ -13,8 +13,8 @@
  */
 public class Solution {
     public ListNode AddTwoNumbers(ListNode l1, ListNode l2) {
-        int number1 = 0;
-        int number2 = 0;
+        long number1 = 0;
+        long number2 = 0;
 
         for(int i = 0; i < 100; i++){
             if(l1 == null && l2 == null) break;
@@ -28,15 +28,18 @@ public class Solution {
             }
         }
 
-        int suma = number1 + number2;
+        long suma = number1 + number2;
         string sumaString = suma.ToString();
         ListNode realActual = new ListNode(0);        
         ListNode actual = realActual;
 
         for(int i= sumaString.Length - 1; i > -1; i--){
             int.TryParse(sumaString.Substring(i,1), out actual.val);
-            actual.next = new ListNode(0);
-            actual = actual.next;
+
+            if(i>0){
+                actual.next = new ListNode(0);
+                actual = actual.next;
+            }
         }
 
         return realActual;
