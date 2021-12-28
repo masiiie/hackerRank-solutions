@@ -1,3 +1,5 @@
+// https://leetcode.com/problems/valid-parentheses/submissions/
+
 public class Solution {
     public bool IsValid(string s) {
         int t1 = 0;
@@ -27,7 +29,6 @@ public class Solution {
                     break;
             }
         }
-
         return t1==0 && t2==0 && t3 == 0;
     }
 }
