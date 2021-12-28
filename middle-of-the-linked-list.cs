@@ -20,5 +20,6 @@ public class Solution {
             count+=1;
             head = head.next;
         }
+        return middle;
     }
 }
