@@ -3,24 +3,38 @@
 using System.Collections.Generic;
 using System;
 
-public 
+class Program
+{
+    static void Main(string[] args)
+    {
+        Solution sol = new Solution();
+        Console.WriteLine(sol.CountAndSay(5));
+    }
+}
 
 public class Solution {
     public string CountAndSay(int n) {
-        
+        if(n==1) return "1";
+        else return say(CountAndSay(n-1));
     }
 
     public string say(string chain){
-        Dictionary<char,int> dict = new Dictionary<char, int>();
-
-        for(int i=0; i<chain.Length; i++){
-            dict[chain[i]]++;
-        }
-        
+        if(chain.Length == 1) return "1"+chain;
         string sol = "";
-        foreach(char key in dict.Keys){
-            sol+=dict[key].ToString()+key;
+        char actualNumber = chain[0];
+        int count = 1;
+
+        for(int i=1; i<chain.Length; i++){
+            if(chain[i]!=actualNumber){
+                sol+=count.ToString()+actualNumber;
+                actualNumber=chain[i];
+                count=1;
+            }
+            else count++;
         }
+
+        sol+=count.ToString()+actualNumber;
+        
         return sol;
     }
 }
