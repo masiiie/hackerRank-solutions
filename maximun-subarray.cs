@@ -1,6 +1,19 @@
+using System;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Solution sol = new Solution();
+        //int[] array = new int[1]{1};
+        //int[] array = new int[5]{5,4,-1,7,8};
+        int[] array = new int[2]{-2,1};
+        Console.WriteLine(sol.MaxSubArray(array));
+    }
+}
+
 public class Solution {
     public int MaxSubArray(int[] nums) {
-        int maxSum = -1;
         int[] sumas = new int[nums.Length];
         sumas[0] = nums[0];
 
@@ -17,7 +30,7 @@ public class Solution {
         }
 
         for(int i=nums.Length-1; i>0;i--){
-            for(int j=0; j<i-1;j++){
+            for(int j=0; j<i;j++){
                 int actual = sumas[i]-sumas[j];
                 if(actual>maxSum){
                     maxSum = actual;
