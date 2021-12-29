@@ -49,12 +49,21 @@ public class ListNode {
 public class Solution {
     public ListNode AddTwoNumbers(ListNode l1, ListNode l2) {
         ListNode solution = new ListNode(0);
-        ListNode solutionIndex = solution;
+        ListNode solutionIndex = null;
         int carry = 0;
         int s = 0;
 
-        while(l1 != null | l2 != null){
-            if(l1 == null ){
+        while(l1 != null | l2 != null | carry>0){
+            if(solutionIndex == null) solutionIndex = solution;
+            else{
+                solutionIndex.next = new ListNode(0);
+                solutionIndex = solutionIndex.next;
+            }
+
+            if(l1==null && l2==null){
+                s = carry;
+            }
+            else if(l1 == null ){
                 s = l2.val + carry;
                 l2 = l2.next;
             }
@@ -75,14 +84,7 @@ public class Solution {
             else carry = 0; 
 
             solutionIndex.val = s;
-            solutionIndex.next = new ListNode(0);
-            solutionIndex = solutionIndex.next;
         }
-
-      
-
-        if(carry==0) solutionIndex = null;
-        else solutionIndex.val = carry;
 
         return solution;
     }
