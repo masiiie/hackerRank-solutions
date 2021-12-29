@@ -7,7 +7,8 @@ public class Program
     public static void Main(string[] args)
     {
         Solution sol = new Solution();
-        int[] nums = new int[10]{0,0,1,1,1,2,2,3,3,4};
+        //int[] nums = new int[10]{0,0,1,1,1,2,2,3,3,4};
+        int[] nums = new int[3]{1,1,2};
         Console.WriteLine(sol.RemoveDuplicates(nums));
         for(int i =0;i<nums.Length;i++){
             Console.Write(nums[i]);
@@ -17,19 +18,21 @@ public class Program
 
 public class Solution {
     public int RemoveDuplicates(int[] nums) {
-        int lastCompareIndex = 0;
         int k = 0;
-        int maxValue = -1;
+        int maxValue = nums[0];
+        int lastCompareIndex = 0;
+        
         for(int i=1;i<nums.Length;i++){
-            if(nums[i]==nums[lastCompareIndex] || nums[i]<=maxValue){
+            if(nums[i]<=maxValue){
                 nums[i]=-1;
                 k++;
             }
             else{
-                lastCompareIndex++;
+                maxValue = nums[i];
+                lastCompareIndex++; 
                 nums[lastCompareIndex] = nums[i];
+                nums[i] = -1;
             }
-            if(nums[i]>maxValue) maxValue=nums[i];
         }
         return k;
     }
