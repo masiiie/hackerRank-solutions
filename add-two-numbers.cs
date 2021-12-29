@@ -81,7 +81,7 @@ public class Solution {
 
       
 
-        if(carry==0) solutionIndex.next = null;
+        if(carry==0) solutionIndex = null;
         else solutionIndex.val = carry;
 
         return solution;
