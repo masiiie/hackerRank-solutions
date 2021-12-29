@@ -1,5 +1,7 @@
 // https://leetcode.com/problems/valid-sudoku/
 
+// Congrats!!
+
 public class Solution {
     public bool IsValidSudoku(char[][] board) {
         bool[,] rows = new bool[9,9];
