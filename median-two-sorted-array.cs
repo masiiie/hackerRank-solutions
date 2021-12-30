@@ -16,12 +16,13 @@ public class Solution {
         }
         else{
             int pos1 = i11 + i12;
-            int median1 = pos1%2==0 ? nums1[pos1/2] : (nums1[(pos1-1)/2]+nums1[(pos1+1)/2])/2;
+            int median1 = pos1%2==0 ? nums1[pos1/2] : nums1[(pos1-1)/2];
             int pos2 = i21 + i22;
-            int median2 = pos2%2==0 ? nums2[pos2/2] : (nums2[(pos2-1)/2]+nums2[(pos2+1)/2])/2;
+            int median2 = pos2%2==0 ? nums2[pos2/2] : nums2[(pos2-1)/2];
 
             if(median1==median2){
-                
+                if(pos1%2 == 0 && pos2%2 == 0) return median1;
+                else 
             }
         }
     }
