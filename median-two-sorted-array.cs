@@ -24,11 +24,13 @@ public class Program
         Console.WriteLine(sol.FindMedianSortedArrays(nums2, nums1));
         ok
 
-        
+        int[] nums1 = new int[4]{1,3,5,7};
+        int[] nums2 = new int[4]{2,3,6,8};
+        ok
         */
 		Solution sol = new Solution();
-        int[] nums1 = new int[3]{1,2,3};
-        int[] nums2 = new int[4]{4,5,6,7};
+        int[] nums1 = new int[4]{1,3,5,7};
+        int[] nums2 = new int[5]{2,4,6,8,10};
 
         Console.WriteLine(sol.FindMedianSortedArrays(nums1,nums2));
 	}
@@ -87,7 +89,8 @@ public class Solution {
             }
             else{
                 int stepsAdded = (median2pos-i21)+1;
-                return FindMedianSortedArrays(nums1, nums2, Math.Max(i11-stepsAdded, 0), Math.Max(i12-stepsAdded, 0), median2pos+1, i22);
+                //return FindMedianSortedArrays(nums1, nums2, Math.Max(i11-stepsAdded, 0), Math.Max(i12-stepsAdded, 0), median2pos+1, i22);
+                return FindMedianSortedArrays(nums1, nums2, i11, median1pos-1, median2pos+1, i22);
             }
         }
     }
