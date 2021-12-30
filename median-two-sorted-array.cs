@@ -1,7 +1,6 @@
 public class Solution {
     public double FindMedianSortedArrays(int[] nums1, int[] nums2) {
-        if(nums1.Length==0 && nums2.Length==0) return 0;
-
+        return FindMedianSortedArrays(nums1, nums2, 0, nums1.Length-1, 0, nums2.Length-1);
     }
 
     public double FindMedianSortedArrays(int[] nums1, int[] nums2, int i11, int i12, int i21, int i22){
@@ -9,10 +8,6 @@ public class Solution {
             Casos base: los i11>i12
             indices negativos o indices mayores q el length del array
         */ 
-
-        if(i11==i12 && i21==i22) return Math.Min(nums1[i11],nums2[i21]);
-        else if(i11!=i12 && i21==i22) return Math.Min(nums1[i11],nums2[i21]);
-
         int pos1 = i11 + i12;
         int pos2 = i21 + i22;
 
@@ -22,16 +17,22 @@ public class Solution {
         int median1 = nums1[median1pos];
         int median2 = nums2[median2pos];
 
-
-
-        if(index1==-1 && index2-1) return 0;
-        else if(index1==-1 && index2!=-1){
-            if(nums2.Length%2==0) return (nums2[index2]+nums2[index2])/2;
-            else return nums2[index2];
+        if(i11==i12 && i21==i22) return Math.Min(nums1[i11],nums2[i21]);
+        else if(i11!=i12 && i21==i22){
+            if(pos1%2 != 0){
+                if(median2<=median1) return median1;
+                else return Math.Min(nums1[median1pos+1], median2);
+            }
+            else if(median2<=median1) return (median1 + Math.Max(nums1[median1pos-1], median2))/2;
+            else return (median1 + Math.Min(nums1[median1pos+1], median2))/2;
         }
-        else if(index1!=-1 && index2==-1){
-            if(nums1.Length%2==0) return (nums1[index1]+nums1[index1])/2;
-            else return nums1[index1];
+        else if(i11==i12 && i21!=i22){
+            if(pos2%2 != 0){
+                if(median1<=median2) return median2;
+                else return Math.Min(nums2[median2pos+1], median1);
+            }
+            else if(median1<=median2) return (median2 + Math.Max(nums2[median2pos-1], median1))/2;
+            else return (median2 + Math.Min(nums2[median2pos+1], median1))/2;
         }
         else{
             if(median1==median2){
