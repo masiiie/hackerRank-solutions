@@ -88,9 +88,9 @@ public class Solution {
                 return FindMedianSortedArrays(nums1, nums2, median1pos+1, i12, Math.Max(i21-stepsAdded, 0), Math.Max(i22-stepsAdded, 0));
             }
             else{
-                int stepsAdded = (median2pos-i21)+1;
+                int stepsAdded = (i12-median1pos)+1;
                 //return FindMedianSortedArrays(nums1, nums2, Math.Max(i11-stepsAdded, 0), Math.Max(i12-stepsAdded, 0), median2pos+1, i22);
-                return FindMedianSortedArrays(nums1, nums2, i11, median1pos-1, median2pos+1, i22);
+                return FindMedianSortedArrays(nums1, nums2, i11, median1pos-1, Math.Min(i21+stepsAdded, nums2.Length-1), Math.Min(i22+stepsAdded, nums2.Length-1));
             }
         }
     }
