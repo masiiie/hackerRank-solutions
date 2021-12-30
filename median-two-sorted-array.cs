@@ -21,9 +21,32 @@ public class Solution {
             int median2 = pos2%2==0 ? nums2[pos2/2] : nums2[(pos2-1)/2];
 
             if(median1==median2){
-                if(pos1%2 == 0 && pos2%2 == 0) return median1;
-                else 
+                if(pos1%2 != 0 && pos2%2 != 0){
+                    int next1 = nums1[(pos1+1)/2];
+                    int next2 = nums2[(pos2+1)/2];
+
+                    if(next1<=next2) return (median1+next1)/2;
+                    else return (median1+next2)/2;
+                }
+                else return median1;
+            }
+            else if(median1<median2){
+                
             }
         }
     }
 }
+
+/*
+if(pos1%2 == 0 && pos2%2 == 0) return median1;
+else if(pos1%2 != 0 && pos2%2 != 0){
+    int next1 = nums1[(pos1+1)/2];
+    int next2 = nums2[(pos2+1)/2];
+
+    if(next1==next2) return (median1+next1)/2;
+    else if(next1<next2) return (median1+next1)/2;
+    else return (median1+next2)/2;
+}
+else if(pos1%2 != 0 && pos2%2 == 0) return median2;
+else return median1; // if(pos1%2 == 0 && pos2%2 != 0)
+*/
