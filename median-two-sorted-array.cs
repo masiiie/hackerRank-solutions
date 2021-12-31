@@ -7,31 +7,31 @@ public class Program
 	{
         // 1 1 1 2 2 2 3 6 7 
         /*
-        int[] nums1 = new int[3]{1,1,2,3};
-        int[] nums2 = new int[4]{1,2,2,6,7};
+        int[] nums1 = new int[4]{1,1,2,3};
+        int[] nums2 = new int[5]{1,2,2,6,7};
         ok
+        
 
         int[] nums1 = new int[3]{1,2,3};
         int[] nums2 = new int[4]{4,5,6,7};
         ok
+        
 
         int[] nums1 = new int[1]{2};
         int[] nums2 = new int[2]{1,3};
-        Console.WriteLine(sol.FindMedianSortedArrays(nums1, nums2));
-        ok
-
-        int[] nums1 = new int[1]{2};
-        int[] nums2 = new int[2]{1,3};
-        Console.WriteLine(sol.FindMedianSortedArrays(nums2, nums1));
         ok
 
         int[] nums1 = new int[4]{1,3,5,7};
         int[] nums2 = new int[4]{2,3,6,8};
+        
+
+        int[] nums1 = new int[4]{1,3,5,7};
+        int[] nums2 = new int[5]{2,4,6,8,10};
         ok
         */
 		Solution sol = new Solution();
         int[] nums1 = new int[4]{1,3,5,7};
-        int[] nums2 = new int[5]{2,4,6,8,10};
+        int[] nums2 = new int[4]{2,3,6,8};
 
         double answer = sol.FindMedianSortedArrays(nums1,nums2);
         Console.WriteLine(answer);
@@ -40,10 +40,10 @@ public class Program
 
 public class Solution {
     public double FindMedianSortedArrays(int[] nums1, int[] nums2) {
-        int[,] options = new int[2,3]{
-                Array.Fill(new int[3], Math.Pow(-10,7)),
-                Array.Fill(new int[3], Math.Pow(-10,7))
-            };
+        int[,] options = new int[2,3];
+        options[0,0] = (int)Math.Pow(-10,7);
+        options[1,0] = (int)Math.Pow(-10,7);
+
         int totalLen = nums1.Length + nums2.Length;
         int umbral = totalLen%2!=0 ? (totalLen-1)/2 : totalLen/2;
         
@@ -65,13 +65,21 @@ public class Solution {
         while(true){
             int posmedian1 = (i11 + i12)/2;
             int posmedian2 = (i21 + i22)/2;
+
+            Console.WriteLine("i11={0}  i12={1}", new object[2]{i11,i12});
+            Console.WriteLine("i21={0}  i22={1}", new object[2]{i21,i22});
+            Console.WriteLine();
+            //Console.ReadLine();
+
+            if(i11>i12) return options[1,0];
+            else if(i21>i22) return options[0,0];
             
-            if(options[0,0]==Math.Pow(-10,7)){
+            if(options[0,0]==(int)Math.Pow(-10,7)){
                 options[0,0] = nums1[posmedian1];
                 options[0,1] = posmedian1;
                 options[0,2] = nums1.Length - posmedian1 - 1;               
             }
-            if(options[1,0]==Math.Pow(-10,7)){
+            if(options[1,0]==(int)Math.Pow(-10,7)){
                 options[1,0]=nums2[posmedian2];
                 options[1,1]=posmedian2;
                 options[1,2]=nums2.Length - posmedian2 - 1;
@@ -92,25 +100,30 @@ public class Solution {
 
             if(totalLen%2!=0 && cond1) return options[0,0];
             else if(totalLen%2!=0 && cond2) return options[1,0];
-            else if(totalLen%2==0 && cond1 && cond2) return (options[0,0], options[1,0])/2;
+            else if(totalLen%2==0 && cond1 && cond2) return (options[0,0] + options[1,0])/2;
 
             int dep1 = isDeprecated(options[0,1], options[0,2]);
             int dep2 = isDeprecated(options[1,1], options[1,2]);
 
+            if(dep1==1) i12 = posmedian1-1;
+            else if(dep1==2) i11=posmedian1+1;
+
+            if(dep2==1) i22 = posmedian2-1;
+            else if(dep2==2) i21=posmedian2+1;
+
             if(dep1>0){
                 if(options[0,0]<=options[1,0]) options[1,1]-=(1+options[0,1]);
                 else options[1,2]-=(1+options[0,2]);
-                if(dep1==1) i12 = posmedian1-1;
-                else i11=posmedian1+1;
-                options[0,0] = Math.Pow(-10,7);
+                Console.WriteLine("{0} deprecated", options[0,0]);
+                options[0,0] = (int)Math.Pow(-10,7);
             }
             else if(dep2>0){
                 if(options[1,0]<=options[0,0]) options[0,1]-=(1+options[1,1]);
                 else options[0,2] -= (1+options[1,2]);
-                if(dep2==1) i22 = posmedian2-1;
-                else i21=posmedian2+1;
-                options[1,0] = Math.Pow(-10,7);
+                Console.WriteLine("{0} deprecated", options[1,0]);
+                options[1,0] = (int)Math.Pow(-10,7);
             }
+            //else if(totalLen%2==0) return (options[0,0] + options[1,0])/2;
         }
         return Math.Pow(-10, 7);
     }
