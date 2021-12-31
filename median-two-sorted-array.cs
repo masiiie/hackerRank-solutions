@@ -59,7 +59,7 @@ public class Solution {
         }
         Console.WriteLine("lastFilled={0}",lastFilled);
         Console.WriteLine();
-        Console.ReadLine();
+        //Console.ReadLine();
 
         int pos1 = i11 + i12;
         int pos2 = i21 + i22;
@@ -71,6 +71,12 @@ public class Solution {
         int median2 = nums2[median2pos];
 
         if(median1<=median2){
+            while(median1> nums2[i21]){
+                lastFilled++;
+                auxiliar[lastFilled] = nums2[i21];
+                i21++;
+            }
+
             for(int i=i11; i<median1pos;i++){
                 lastFilled++;
                 auxiliar[lastFilled] = nums1[i];
