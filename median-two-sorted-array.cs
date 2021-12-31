@@ -27,7 +27,10 @@ public class Program
 
         int[] nums1 = new int[4]{1,3,5,7};
         int[] nums2 = new int[5]{2,4,6,8,10};
-        ok
+        
+
+        Casos problematicos:
+            Los arrays son iguales o con diferencia 2.
         */
 		Solution sol = new Solution();
         int[] nums1 = new int[4]{1,3,5,7};
