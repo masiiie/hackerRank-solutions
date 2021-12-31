@@ -61,32 +61,19 @@ public class Solution {
         int median1 = nums1[median1pos];
         int median2 = nums2[median2pos];
 
-        if(median1<median2){
-            for(int i=i11; i<=median1pos;i++){
+        if(median1<=median2){
+            for(int i=i11; i<median1pos;i++){
                 lastFilled++;
                 auxiliar[lastFilled] = nums1[i];
             }
-            return FindMedianSortedArrays(nums1, nums2, median1pos+1, i12, i21, i22, auxiliar, lastFilled);
+            return FindMedianSortedArrays(nums1, nums2, median1pos, i12, i21, i22, auxiliar, lastFilled);
         }
-        else if(median1>median2){
-            for(int i=i21; i<=median2pos;i++){
+        else{
+            for(int i=i21; i<median2pos;i++){
                 lastFilled++;
                 auxiliar[lastFilled] = nums2[i];
             }
+            return FindMedianSortedArrays(nums1,nums2,i11,i12,median2pos,i22,auxiliar,lastFilled);
         }
     }
 }
-
-/*
-if(pos1%2 == 0 && pos2%2 == 0) return median1;
-else if(pos1%2 != 0 && pos2%2 != 0){
-    int next1 = nums1[(pos1+1)/2];
-    int next2 = nums2[(pos2+1)/2];
-
-    if(next1==next2) return (median1+next1)/2;
-    else if(next1<next2) return (median1+next1)/2;
-    else return (median1+next2)/2;
-}
-else if(pos1%2 != 0 && pos2%2 == 0) return median2;
-else return median1; // if(pos1%2 == 0 && pos2%2 != 0)
-*/
