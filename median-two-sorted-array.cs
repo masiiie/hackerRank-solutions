@@ -52,6 +52,15 @@ public class Solution {
             else return auxiliar[(auxLen-1)/2];
         }
 
+        Console.WriteLine("i11={0} i12={1}", new object[2]{i11,i12});
+        Console.WriteLine("i21={0} i22={1}", new object[2]{i21,i22});
+        for(int i=0;i<auxLen;i++){
+            Console.Write("{0} ", auxiliar[i]);
+        }
+        Console.WriteLine("lastFilled={0}",lastFilled);
+        Console.WriteLine();
+        Console.ReadLine();
+
         int pos1 = i11 + i12;
         int pos2 = i21 + i22;
 
