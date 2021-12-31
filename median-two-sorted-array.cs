@@ -61,7 +61,19 @@ public class Solution {
         int median1 = nums1[median1pos];
         int median2 = nums2[median2pos];
 
-
+        if(median1<median2){
+            for(int i=i11; i<=median1pos;i++){
+                lastFilled++;
+                auxiliar[lastFilled] = nums1[i];
+            }
+            return FindMedianSortedArrays(nums1, nums2, median1pos+1, i12, i21, i22, auxiliar, lastFilled);
+        }
+        else if(median1>median2){
+            for(int i=i21; i<=median2pos;i++){
+                lastFilled++;
+                auxiliar[lastFilled] = nums2[i];
+            }
+        }
     }
 }
 
