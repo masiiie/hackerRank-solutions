@@ -32,20 +32,26 @@ public class Program
         int[] nums1 = new int[4]{1,3,5,7};
         int[] nums2 = new int[5]{2,4,6,8,10};
 
-        Console.WriteLine(sol.FindMedianSortedArrays(nums1,nums2));
+        double answer = sol.FindMedianSortedArrays(nums1,nums2);
+        Console.WriteLine(answer);
 	}
 }
 
 public class Solution {
     public double FindMedianSortedArrays(int[] nums1, int[] nums2) {
-        return FindMedianSortedArrays(nums1, nums2, 0, nums1.Length-1, 0, nums2.Length-1);
+        int n = nums1.Length;
+        int m = nums2.Length;
+        return FindMedianSortedArrays(nums1, nums2, 0, n-1, 0, m-1, new int[n+m], -1);
     }
 
-    public double FindMedianSortedArrays(int[] nums1, int[] nums2, int i11, int i12, int i21, int i22){
-        /*
-            Casos base: los i11>i12
-            indices negativos o indices mayores q el length del array
-        */ 
+    public double FindMedianSortedArrays(int[] nums1, int[] nums2, int i11, int i12, int i21, int i22, int[] auxiliar, int lastFilled){
+        int auxLen = auxiliar.Length;
+
+        if(lastFilled>=(auxLen-1)/2){
+            if(auxLen%2==0) return (auxiliar[auxLen/2] + auxiliar[(auxLen/2)-1])/2;
+            else return auxiliar[(auxLen-1)/2];
+        }
+
         int pos1 = i11 + i12;
         int pos2 = i21 + i22;
 
@@ -55,44 +61,7 @@ public class Solution {
         int median1 = nums1[median1pos];
         int median2 = nums2[median2pos];
 
-        if(i11==i12 && i21==i22) return Math.Min(nums1[i11],nums2[i21]);
-        else if(i11!=i12 && i21==i22){
-            if(pos1%2 != 0){
-                if(median2<=median1) return median1;
-                else return Math.Min(nums1[median1pos+1], median2);
-            }
-            else if(median2<=median1) return (median1 + Math.Max(nums1[median1pos-1], median2))/2;
-            else return (median1 + Math.Min(nums1[median1pos+1], median2))/2;
-        }
-        else if(i11==i12 && i21!=i22){
-            if(pos2%2 != 0){
-                if(median1<=median2) return median2;
-                else return Math.Min(nums2[median2pos+1], median1);
-            }
-            else if(median1<=median2) return (median2 + Math.Max(nums2[median2pos-1], median1))/2;
-            else return (median2 + Math.Min(nums2[median2pos+1], median1))/2;
-        }
-        else{
-            if(median1==median2){
-                if(pos1%2 != 0 && pos2%2 != 0){
-                    int next1 = nums1[median1pos+1];
-                    int next2 = nums2[median2pos+1];
 
-                    if(next1<=next2) return (median1+next1)/2;
-                    else return (median1+next2)/2;
-                }
-                else return median1;
-            }
-            else if(median1<median2){
-                int stepsAdded = (median1pos-i11)+1;
-                return FindMedianSortedArrays(nums1, nums2, median1pos+1, i12, Math.Max(i21-stepsAdded, 0), Math.Max(i22-stepsAdded, 0));
-            }
-            else{
-                int stepsAdded = (i12-median1pos)+1;
-                //return FindMedianSortedArrays(nums1, nums2, Math.Max(i11-stepsAdded, 0), Math.Max(i12-stepsAdded, 0), median2pos+1, i22);
-                return FindMedianSortedArrays(nums1, nums2, i11, median1pos-1, Math.Min(i21+stepsAdded, nums2.Length-1), Math.Min(i22+stepsAdded, nums2.Length-1));
-            }
-        }
     }
 }
 
