@@ -8,22 +8,16 @@ public class Program
         // 1 1 1 2 2 2 3 6 7 
         /*
         int[] nums1 = new int[4]{1,1,2,3};
-        int[] nums2 = new int[5]{1,2,2,6,7};
-        ok
-        
+        int[] nums2 = new int[5]{1,2,2,6,7};        
 
         int[] nums1 = new int[3]{1,2,3};
         int[] nums2 = new int[4]{4,5,6,7};
-        ok
-        
 
         int[] nums1 = new int[1]{2};
         int[] nums2 = new int[2]{1,3};
-        ok
-
-        int[] nums1 = new int[4]{1,3,5,7};
-        int[] nums2 = new int[4]{2,3,6,8};
         
+        int[] nums1 = new int[4]{1,3,5,7};
+        int[] nums2 = new int[4]{2,3,6,8};        
 
         int[] nums1 = new int[4]{1,3,5,7};
         int[] nums2 = new int[5]{2,4,6,8,10};
@@ -127,7 +121,7 @@ public class Solution {
 
             if(totalLen%2!=0 && cond1) return options[0,0];
             else if(totalLen%2!=0 && cond2) return options[1,0];
-            else if(totalLen%2==0 && cond1 && cond2) return (options[0,0] + options[1,0])/2;
+            //else if(totalLen%2==0 && cond1 && cond2) return (options[0,0] + options[1,0])/2;
 
             int dep1 = isDeprecated(options[0,1], options[0,2]);
             int dep2 = isDeprecated(options[1,1], options[1,2]);
