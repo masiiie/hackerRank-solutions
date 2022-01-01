@@ -56,15 +56,12 @@ public class Program
 public class Solution {
     public double FindMedianSortedArrays(int[] nums1, int[] nums2) {
         int[,] options = new int[2,3];
-        options[0,0] = (int)Math.Pow(-10,7);
-        options[1,0] = (int)Math.Pow(-10,7);
-
         int totalLen = nums1.Length + nums2.Length;
         int umbral = totalLen%2!=0 ? (totalLen-1)/2 : totalLen/2;
         
         Func<int,int,int> isDeprecated = (int menores,int mayores) => {
-            if(menores>umbral) return 1;
-            if(mayores>umbral) return 2;
+            if(menores>umbral) return -1;
+            if(mayores>umbral) return 1;
             return 0;
         };   
 
@@ -86,19 +83,22 @@ public class Solution {
             Console.WriteLine();
             //Console.ReadLine();
 
-            if(i11>i12) return options[1,0];
-            else if(i21>i22) return options[0,0];
+            if(i11>i12){
+                if(totalLen%2==0 && i22-i21==1) return (nums2[i21]+nums2[22])/2;
+                else if(totalLen%2!=0 && i21==i22) return nums2[21];
+            }
+            else if(i21>i22){
+                if(totalLen%2==0 && i12-i11==1) return (nums1[i11]+nums1[i12])/2;
+                else if(totalLen%2!=0 && i11==i12) return nums1[i11];
+            }
             
-            if(options[0,0]==(int)Math.Pow(-10,7)){
-                options[0,0] = nums1[posmedian1];
-                options[0,1] = posmedian1;
-                options[0,2] = nums1.Length - posmedian1 - 1;               
-            }
-            if(options[1,0]==(int)Math.Pow(-10,7)){
-                options[1,0]=nums2[posmedian2];
-                options[1,1]=posmedian2;
-                options[1,2]=nums2.Length - posmedian2 - 1;
-            }
+            options[0,0] = nums1[posmedian1];
+            options[0,1] = posmedian1;
+            options[0,2] = nums1.Length - posmedian1 - 1;
+
+            options[1,0]=nums2[posmedian2];
+            options[1,1]=posmedian2;
+            options[1,2]=nums2.Length - posmedian2 - 1;
 
 
             if(options[0,0]<=options[1,0]){
@@ -120,23 +120,15 @@ public class Solution {
             int dep1 = isDeprecated(options[0,1], options[0,2]);
             int dep2 = isDeprecated(options[1,1], options[1,2]);
 
-            if(dep1==1) i12 = posmedian1-1;
-            else if(dep1==2) i11=posmedian1+1;
+            if(options[0,1]>=umbral) i12=posmedian1+dep1;
+            else if(options[0,2]>=umbral) i11=posmedian1+dep1;
 
-            if(dep2==1) i22 = posmedian2-1;
-            else if(dep2==2) i21=posmedian2+1;
+            if(options[1,1]>=umbral) i22=posmedian2+dep2;
+            else if(options[1,2]>=umbral) i21=posmedian2+dep2;
 
-            if(dep1>0){
-                if(options[0,0]<=options[1,0]) options[1,1]-=(1+options[0,1]);
-                else options[1,2]-=(1+options[0,2]);
-                Console.WriteLine("{0} deprecated", options[0,0]);
-                options[0,0] = (int)Math.Pow(-10,7);
-            }
-            else if(dep2>0){
-                if(options[1,0]<=options[0,0]) options[0,1]-=(1+options[1,1]);
-                else options[0,2] -= (1+options[1,2]);
-                Console.WriteLine("{0} deprecated", options[1,0]);
-                options[1,0] = (int)Math.Pow(-10,7);
+            if(dep1==0 && dep2==0){
+                // I'm not very sure
+                if(i11==i12 && i21==i22 && totalLen%2==0) return (nums1[i11]+nums2[i22])/2;
             }
             //else if(totalLen%2==0) return (options[0,0] + options[1,0])/2;
         }
