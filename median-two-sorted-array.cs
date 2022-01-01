@@ -31,6 +31,11 @@ public class Program
 
         Casos problematicos:
             Los arrays son iguales o con diferencia 2.
+
+
+        int[] nums1 = new int[4]{7,10,21,44};
+        int[] nums2 = new int[4]{22,30,31,40};
+        // Este caso es super problematico porque deja el array de la izquierda vacio
         */
 		Solution sol = new Solution();
         int[] nums1 = new int[4]{1,3,5,7};
