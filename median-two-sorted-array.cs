@@ -36,6 +36,13 @@ public class Program
         int[] nums1 = new int[4]{7,10,21,44};
         int[] nums2 = new int[4]{22,30,31,40};
         // Este caso es super problematico porque deja el array de la izquierda vacio
+
+
+        int[] nums1 = new int[7]{7,10,21,44,45,46,47};
+        int[] nums2 = new int[7]{22,30,31,40,40,40,40};
+        // Otro caso problematico xq quedan dos numeros al final q no se descartan y es impo-
+        sible que puedan ser mediana juntos xq no quedan contiguos en la ordenacion
+
         */
 		Solution sol = new Solution();
         int[] nums1 = new int[4]{1,3,5,7};
