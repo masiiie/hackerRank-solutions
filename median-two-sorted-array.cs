@@ -41,7 +41,12 @@ public class Program
         int[] nums1 = new int[7]{7,10,21,44,45,46,47};
         int[] nums2 = new int[7]{22,30,31,40,40,40,40};
         // Otro caso problematico xq quedan dos numeros al final q no se descartan y es impo-
-        sible que puedan ser mediana juntos xq no quedan contiguos en la ordenacion
+        // sible que puedan ser mediana juntos xq no quedan contiguos en la ordenacion
+
+        int[] nums1 = new int[3]{1,20,30};
+        int[] nums2 = new int[3]{1,21,32};
+        // Caso super problematico: quedan 3 numeros q no pueden descartarse y se enfrentan
+        // las medianas desde el principio
 
         */
 		Solution sol = new Solution();
@@ -100,8 +105,15 @@ public class Solution {
             options[1,1]=posmedian2;
             options[1,2]=nums2.Length - posmedian2 - 1;
 
-
-            if(options[0,0]<=options[1,0]){
+            if(options[0,0]==options[1,0]){
+                int t1 = options[0,1] + options[1,1];
+                int t2 = options[0,2] + options[1,2];
+                options[0,1] = t1;
+                options[0,2] = t2;
+                options[1,1] = t1;
+                options[1,2] = t2;
+            }
+            else if(options[0,0]<options[1,0]){
                 options[1,1]+=1+options[0,1];
                 options[0,2]+=1+options[1,2];
             }
