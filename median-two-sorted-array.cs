@@ -16,6 +16,7 @@ public class Program
 
         int[] nums1 = new int[4]{1,3,5,7};
         int[] nums2 = new int[5]{2,4,6,8,10};
+        sol = 5
         ok!!  ~ Se queda vacio un array y el otro con un solo candidato
 
         int[] nums1 = new int[8]{7,8,8,8,8,8,8,9};
@@ -48,6 +49,7 @@ public class Program
 
         int[] nums1 = new int[4]{1,3,5,7};
         int[] nums2 = new int[4]{2,3,6,8}; 
+        sol = 4
         ok!! 
 
         int[] nums1 = new int[4]{1,2,3,4};
@@ -61,10 +63,24 @@ public class Program
         int[] nums1 = new int[4]{7,10,21,44};
         int[] nums2 = new int[4]{22,30,31,40};
         ok!!
+
+        Caso super problematico:
+        int[] nums1 = new int[1]{1};
+        int[] nums2 = new int[3]{2,3,4};
+        // Mal antes, xq sacaba la mediana de 3 numeros pero se podia seguir descartando
+
+        int[] nums1 = new int[2]{1,5};
+        int[] nums2 = new int[4]{2,3,4,6};
+        // Se acaba uno y retorna la mediana del otro pero la retorna mal
+
+        int[] nums1 = new int[2]{0,100};
+        int[] nums2 = new int[10]{1,2,3,4,5,6,7,8,9,10};
+        // super mal todo con este caso, se vacia uno y retorna mal la mediana
+
         */
 		Solution sol = new Solution();
-        int[] nums1 = new int[10]{0,0,0,0,0,1,1,1,1,1};
-        int[] nums2 = new int[10]{1,1,1,1,1,1,1,1,1,1};
+        int[] nums1 = new int[2]{1,5};
+        int[] nums2 = new int[4]{2,3,4,6};
 
 
         double answer = sol.FindMedianSortedArrays(nums1,nums2);
@@ -97,31 +113,39 @@ public class Solution {
             return false;
         };
 
+        int i11=0;    int i12=nums1.Length-1;
+        int i21=0;    int i22=nums2.Length-1;
 
-        int i11 = 0;    int i12=nums1.Length-1;
-        int i21 = 0;    int i22=nums2.Length-1;
-        int dep1 = 1; int dep2 = 1; int dep3 = 1;
+        bool change1=true; bool change2=true;
 
 
         while(true){
             int posmedian1 = (i11 + i12)/2;
             int posmedian2 = (i21 + i22)/2;
 
+            
             Console.WriteLine("i11={0}  i12={1}", new object[2]{i11,i12});
             Console.WriteLine("i21={0}  i22={1}", new object[2]{i21,i22});
             Console.WriteLine();
             //Console.ReadLine();
+            
 
             if(i11==i12 && i21==i22 && totalLen%2==0) return (double)(nums1[i11]+nums2[i22])/(double)2;
             else if(i11>i12){
-                if(totalLen%2==0) return (double)(nums2[posmedian2]+nums2[posmedian2+1])/(double)2;
+                if(totalLen%2==0) 
+                    return (i22-i21)%2!=0 ?
+                    (double)(nums2[posmedian2]+nums2[posmedian2+1])/(double)2 :
+                    (double)(nums2[posmedian2]+nums2[posmedian2-1])/(double)2;
                 else return nums2[posmedian2];
             }
             else if(i21>i22){
-                if(totalLen%2==0) return (double)(nums1[posmedian1]+nums1[posmedian1+1])/(double)2;
+                if(totalLen%2==0) 
+                    return (i12-i11)%2!=0 ?
+                    (double)(nums1[posmedian1]+nums1[posmedian1+1])/(double)2 :
+                    (double)(nums1[posmedian1]+nums1[posmedian1-1])/(double)2;
                 else return nums1[posmedian1];
             }
-            else if(dep1==0 && dep2==0 && dep3==0 && (i12-i11)+(i22-i21)== 1){
+            else if(!change1 && !change2 && (i12-i11)+(i22-i21)== 1){
                 int along = i11==i12 ? nums1[i11] : nums2[i21];
                 int n1 = i11==i12 ? nums2[i21] : nums1[i11];
                 int n2 = i11==i12 ? nums2[i22] : nums1[i12];
@@ -163,17 +187,35 @@ public class Solution {
             else if(totalLen%2!=0 && cond2) return options[1,0];
             else if(totalLen%2==0 && cond3) return (double)(options[0,0] + options[1,0])/(double)2;
 
-            dep1 = isDeprecated(options[0,1], options[0,2]);
-            dep2 = isDeprecated(options[1,1], options[1,2]);
+            int dep1 = isDeprecated(options[0,1], options[0,2]);
+            int dep2 = isDeprecated(options[1,1], options[1,2]);
 
-            dep3 = options[0,0]==options[1,0] && dep1==0 && 
+            int dep3 = options[0,0]==options[1,0] && dep1==0 && 
                 ((totalLen%2==0 && !cond3) || totalLen%2!=0) ? 1 : 0;
 
-            if(options[0,1]>=umbral) i12=posmedian1+dep1-dep3;
-            else if(options[0,2]>=umbral) i11=posmedian1+dep1+dep3;
+            if(options[0,1]>=umbral){
+                int last = i12;
+                i12=posmedian1+dep1-dep3;
+                change1 = last!=i12;
+            }
+            else if(options[0,2]>=umbral){
+                int last = i11;
+                i11=posmedian1+dep1+dep3;
+                change1 = last!=i11;
+            }
+            else change1 = false;
 
-            if(options[1,1]>=umbral) i22=posmedian2+dep2;
-            else if(options[1,2]>=umbral) i21=posmedian2+dep2;
+            if(options[1,1]>=umbral){
+                int last = i22;
+                i22=posmedian2+dep2;
+                change2 = last!=i22;
+            }
+            else if(options[1,2]>=umbral){
+                int last = i21;
+                i21=posmedian2+dep2;
+                change2 = last!=i21;
+            }
+            else change2=false;
         }
         return Math.Pow(-10, 7);
     }
