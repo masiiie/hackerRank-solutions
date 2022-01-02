@@ -33,47 +33,38 @@ public class Program
         int[] nums1 = new int[4]{1,2,3,3};
         int[] nums2 = new int[20]{1,2,3,3,3,6,7,8,8,8,9,9,9,9,9,9,9,9,9,9};
         ok!!
-        
-        Casos problematicos:
-            Los arrays son iguales o con diferencia par.
-
-        int[] nums1 = new int[3]{1,20,30};
-        int[] nums2 = new int[3]{1,21,32};
-        // Tres numeros q no se pueden descartar
-
-        int[] nums1 = new int[4]{1,1,2,3};
-        int[] nums2 = new int[5]{1,2,2,6,7};  
-        // Tres numeros q no se pueden descartar
-
-        int[] nums1 = new int[4]{1,3,5,7};
-        int[] nums2 = new int[4]{2,3,6,8};  
-        // Tres numeros q no se pueden descartar
-
-        int[] nums1 = new int[7]{7,10,21,44,45,46,47};
-        int[] nums2 = new int[7]{22,30,31,40,40,40,40};
-        // Tres numeros q no se pueden descartar
-
-        int[] nums1 = new int[4]{7,10,21,44};
-        int[] nums2 = new int[4]{22,30,31,40};
-        // Tres numeros q no se pueden descartar
-
-        int[] nums1 = new int[4]{1,2,3,4};
-        int[] nums2 = new int[10]{1,2,3,4,5,6,7,8,8,8};
-        // Tres numeros q no se pueden descartar
 
         int[] nums1 = new int[4]{7,8,8,9};
         int[] nums2 = new int[20]{1,2,3,3,3,6,7,8,8,8,9,9,9,9,9,9,9,9,9,9};
-        // Cinco elementos que no se pueden descartar (pero se reduce a 4 que no se pueden descartar)
+        ok!!
 
-        int[] nums1 = new int[10]{0,0,0,0,0,1,1,1,1,1};
-        int[] nums2 = new int[10]{1,1,1,1,1,1,1,1,1,1};
-        // Tres numeros que no se pueden descartar
+        int[] nums1 = new int[7]{7,10,21,44,45,46,47};
+        int[] nums2 = new int[7]{22,30,31,40,40,40,40};
+        ok!!
+
+        int[] nums1 = new int[4]{1,1,2,3};
+        int[] nums2 = new int[5]{1,2,2,6,7};  
+        ok!!
+
+        int[] nums1 = new int[4]{1,3,5,7};
+        int[] nums2 = new int[4]{2,3,6,8}; 
+        ok!! 
+
+        int[] nums1 = new int[4]{1,2,3,4};
+        int[] nums2 = new int[10]{1,2,3,4,5,6,7,8,8,8};
+        ok!!
 
         int[] nums1 = new int[4]{1,2,3,4};
         int[] nums2 = new int[8]{1,2,3,4,5,6,7,8};
-        // Tres numeros que no se pueden descartar
+        ok!!
+
+        int[] nums1 = new int[4]{7,10,21,44};
+        int[] nums2 = new int[4]{22,30,31,40};
+        ok!!
         */
 		Solution sol = new Solution();
+        int[] nums1 = new int[10]{0,0,0,0,0,1,1,1,1,1};
+        int[] nums2 = new int[10]{1,1,1,1,1,1,1,1,1,1};
 
 
         double answer = sol.FindMedianSortedArrays(nums1,nums2);
@@ -109,6 +100,7 @@ public class Solution {
 
         int i11 = 0;    int i12=nums1.Length-1;
         int i21 = 0;    int i22=nums2.Length-1;
+        int dep1 = 1; int dep2 = 1; int dep3 = 1;
 
 
         while(true){
@@ -120,14 +112,22 @@ public class Solution {
             Console.WriteLine();
             //Console.ReadLine();
 
-            if(i11==i12 && i21==i22 && totalLen%2==0) return (nums1[i11]+nums2[i22])/2;
+            if(i11==i12 && i21==i22 && totalLen%2==0) return (double)(nums1[i11]+nums2[i22])/(double)2;
             else if(i11>i12){
-                if(totalLen%2==0) return (nums2[posmedian2]+nums2[posmedian2+1])/2;
+                if(totalLen%2==0) return (double)(nums2[posmedian2]+nums2[posmedian2+1])/(double)2;
                 else return nums2[posmedian2];
             }
             else if(i21>i22){
-                if(totalLen%2==0) return (nums1[posmedian1]+nums1[posmedian1+1])/2;
+                if(totalLen%2==0) return (double)(nums1[posmedian1]+nums1[posmedian1+1])/(double)2;
                 else return nums1[posmedian1];
+            }
+            else if(dep1==0 && dep2==0 && dep3==0 && (i12-i11)+(i22-i21)== 1){
+                int along = i11==i12 ? nums1[i11] : nums2[i21];
+                int n1 = i11==i12 ? nums2[i21] : nums1[i11];
+                int n2 = i11==i12 ? nums2[i22] : nums1[i12];
+
+                if(totalLen%2==0) return along>=n2 ? (double)(n1+n2)/(double)2 : (double)(n1+along)/(double)2;
+                else return along>=n2 ? n2 : (along>=n1 ? along : n1);
             }
             
             options[0,0] = nums1[posmedian1];
@@ -161,12 +161,12 @@ public class Solution {
 
             if(totalLen%2!=0 && cond1) return options[0,0];
             else if(totalLen%2!=0 && cond2) return options[1,0];
-            else if(totalLen%2==0 && cond3) return (options[0,0] + options[1,0])/2;
+            else if(totalLen%2==0 && cond3) return (double)(options[0,0] + options[1,0])/(double)2;
 
-            int dep1 = isDeprecated(options[0,1], options[0,2]);
-            int dep2 = isDeprecated(options[1,1], options[1,2]);
+            dep1 = isDeprecated(options[0,1], options[0,2]);
+            dep2 = isDeprecated(options[1,1], options[1,2]);
 
-            int dep3 = options[0,0]==options[1,0] && dep1==0 && 
+            dep3 = options[0,0]==options[1,0] && dep1==0 && 
                 ((totalLen%2==0 && !cond3) || totalLen%2!=0) ? 1 : 0;
 
             if(options[0,1]>=umbral) i12=posmedian1+dep1-dep3;
