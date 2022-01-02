@@ -22,6 +22,18 @@ public class Program
         int[] nums2 = new int[26]{1,1,1,1,1,1,1,2,3,3,3,6,7,8,8,8,9,9,9,9,9,9,9,9,9,9};
         ok!!  ~ Quedan solo 2 candidatos al final
 
+        int[] nums1 = new int[10]{1,1,1,1,1,1,1,1,1,1};
+        int[] nums2 = new int[10]{1,1,1,1,1,1,1,1,1,1};
+        ok!!
+
+        int[] nums1 = new int[3]{8,8,9};
+        int[] nums2 = new int[2]{8,9};
+        ok!!
+
+        int[] nums1 = new int[4]{1,2,3,3};
+        int[] nums2 = new int[20]{1,2,3,3,3,6,7,8,8,8,9,9,9,9,9,9,9,9,9,9};
+        ok!!
+        
         Casos problematicos:
             Los arrays son iguales o con diferencia par.
 
@@ -46,36 +58,23 @@ public class Program
         // Tres numeros q no se pueden descartar
 
         int[] nums1 = new int[4]{1,2,3,4};
-        int[] nums2 = new int[8]{1,2,3,4,5,6,7,8};
-        // Cuatro numeros que no se pueden descartar
-
-        int[] nums1 = new int[4]{1,2,3,4};
         int[] nums2 = new int[10]{1,2,3,4,5,6,7,8,8,8};
         // Tres numeros q no se pueden descartar
-
-        int[] nums1 = new int[4]{1,2,3,3};
-        int[] nums2 = new int[20]{1,2,3,3,3,6,7,8,8,8,9,9,9,9,9,9,9,9,9,9};
-        // El primero se acaba y da IndexOutRange xq en el otro quedan mas de dos elementos
 
         int[] nums1 = new int[4]{7,8,8,9};
         int[] nums2 = new int[20]{1,2,3,3,3,6,7,8,8,8,9,9,9,9,9,9,9,9,9,9};
         // Cinco elementos que no se pueden descartar (pero se reduce a 4 que no se pueden descartar)
 
-        int[] nums1 = new int[3]{8,8,9};
-        int[] nums2 = new int[2]{8,9};
-        // Cuatro numeros que no se pueden descartar
-
-        int[] nums1 = new int[10]{1,1,1,1,1,1,1,1,1,1};
-        int[] nums2 = new int[10]{1,1,1,1,1,1,1,1,1,1};
-        // Cuatro numeros que no se pueden descartar
-
         int[] nums1 = new int[10]{0,0,0,0,0,1,1,1,1,1};
         int[] nums2 = new int[10]{1,1,1,1,1,1,1,1,1,1};
         // Tres numeros que no se pueden descartar
+
+        int[] nums1 = new int[4]{1,2,3,4};
+        int[] nums2 = new int[8]{1,2,3,4,5,6,7,8};
+        // Tres numeros que no se pueden descartar
         */
 		Solution sol = new Solution();
-        int[] nums1 = new int[10]{0,0,0,0,0,1,1,1,1,1};
-        int[] nums2 = new int[10]{1,1,1,1,1,1,1,1,1,1};
+
 
         double answer = sol.FindMedianSortedArrays(nums1,nums2);
         Console.WriteLine(answer);
@@ -94,9 +93,18 @@ public class Solution {
             return 0;
         };   
 
-        Func<int,int,bool> isMedian = (int menores,int mayores) => {
-            return (menores+mayores+1)==totalLen && Math.Abs(mayores-menores)<=1;
+        Func<int,int,bool> isMedian = (int menores, int mayores) => {
+            return (menores+mayores+1)==totalLen && mayores==menores;
         }; 
+
+        Func<int[,], bool> areMedianToguether = (int[,] actualOptions) => {
+            int m1 = actualOptions[0,0]; int m2 = actualOptions[1,0];
+            int men1 = actualOptions[0,1]; int men2 = actualOptions[1,1];
+            int may1 = actualOptions[0,2]; int may2 = actualOptions[1,2];
+
+            if(m1==m2 && men1==may1) return true;
+            return false;
+        };
 
 
         int i11 = 0;    int i12=nums1.Length-1;
@@ -149,16 +157,20 @@ public class Solution {
 
             bool cond1 = isMedian(options[0,1], options[0,2]);
             bool cond2 = isMedian(options[1,1], options[1,2]);
+            bool cond3 = areMedianToguether(options);
 
             if(totalLen%2!=0 && cond1) return options[0,0];
             else if(totalLen%2!=0 && cond2) return options[1,0];
-            else if(totalLen%2==0 && cond1 && cond2) return (options[0,0] + options[1,0])/2;
+            else if(totalLen%2==0 && cond3) return (options[0,0] + options[1,0])/2;
 
             int dep1 = isDeprecated(options[0,1], options[0,2]);
             int dep2 = isDeprecated(options[1,1], options[1,2]);
 
-            if(options[0,1]>=umbral) i12=posmedian1+dep1;
-            else if(options[0,2]>=umbral) i11=posmedian1+dep1;
+            int dep3 = options[0,0]==options[1,0] && dep1==0 && 
+                ((totalLen%2==0 && !cond3) || totalLen%2!=0) ? 1 : 0;
+
+            if(options[0,1]>=umbral) i12=posmedian1+dep1-dep3;
+            else if(options[0,2]>=umbral) i11=posmedian1+dep1+dep3;
 
             if(options[1,1]>=umbral) i22=posmedian2+dep2;
             else if(options[1,2]>=umbral) i21=posmedian2+dep2;
