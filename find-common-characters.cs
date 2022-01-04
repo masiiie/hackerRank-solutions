@@ -14,12 +14,16 @@ public class Program
 
 public class Solution {
     public IList<string> CommonChars(string[] words) {
-        string sol = words[0];
+        IEnumerable<char> sol = words[0].ToCharArray();
 
-        foreach(string x in words){
-            string toRemove = new List<char>();
-            for(int i=0;i<sol.Length;i++) if(!x.Contains(sol[i])) toRemove.Add(sol[i]);
-            
+        for(int i=0;i<words.Length;i++){
+            List<char> solCopy = new List<char>(sol);
+            foreach(char charx in sol){
+                int index = words[i].IndexOf(charx);
+                if(index<0) solCopy.Remove(charx);
+                else words[i]=words[i].Remove(index,1);  
+            }
+            sol = solCopy;
         }
 
         return sol.Select(c => c.ToString()).ToList();
