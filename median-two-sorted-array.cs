@@ -3,88 +3,55 @@ using System.Collections.Generic;
 
 public class Program
 {
+    public static List<Tuple<int[],int[],double>> answers = new List<Tuple<int[], int[], double>>(){
+        new Tuple<int[], int[], double>(
+            new int[2]{0,100},
+            new int[10]{1,2,3,4,5,6,7,8,9,10}, 
+            5.5),
+        new Tuple<int[], int[], double>(
+            new int[2]{1,5}, 
+            new int[4]{2,3,4,6}, 
+            3.5),
+        new Tuple<int[], int[], double>(
+            new int[1]{1}, 
+            new int[3]{2,3,4}, 
+            2.5),
+        new Tuple<int[], int[], double>(
+            new int[4]{7,10,21,44}, 
+            new int[4]{22,30,31,40}, 
+            26),
+    };
+
+    public static string printArray(int[] array){
+        string sol = "{ " + array[0].ToString();
+        for(int i=1;i<array.Length;i++) sol+=", "+array[i].ToString();
+        return sol+" }";
+    }
 	public static void Main()
 	{
-        /*      
-        int[] nums1 = new int[3]{1,2,3};
-        int[] nums2 = new int[4]{4,5,6,7};
-        ok!!  ~ Cuando compara el 3 con el 4 este ultimo queda (3 y 3) y median(4) da true
-
-        int[] nums1 = new int[1]{2};
-        int[] nums2 = new int[2]{1,3};
-        ok!!  ~ Se queda vacio un array y el otro con un solo candidato   
-
-        int[] nums1 = new int[4]{1,3,5,7};
-        int[] nums2 = new int[5]{2,4,6,8,10};
-        sol = 5
-        ok!!  ~ Se queda vacio un array y el otro con un solo candidato
-
-        int[] nums1 = new int[8]{7,8,8,8,8,8,8,9};
-        int[] nums2 = new int[26]{1,1,1,1,1,1,1,2,3,3,3,6,7,8,8,8,9,9,9,9,9,9,9,9,9,9};
-        ok!!  ~ Quedan solo 2 candidatos al final
-
-        int[] nums1 = new int[10]{1,1,1,1,1,1,1,1,1,1};
-        int[] nums2 = new int[10]{1,1,1,1,1,1,1,1,1,1};
-        ok!!
-
-        int[] nums1 = new int[3]{8,8,9};
-        int[] nums2 = new int[2]{8,9};
-        ok!!
-
-        int[] nums1 = new int[4]{1,2,3,3};
-        int[] nums2 = new int[20]{1,2,3,3,3,6,7,8,8,8,9,9,9,9,9,9,9,9,9,9};
-        ok!!
-
-        int[] nums1 = new int[4]{7,8,8,9};
-        int[] nums2 = new int[20]{1,2,3,3,3,6,7,8,8,8,9,9,9,9,9,9,9,9,9,9};
-        ok!!
-
-        int[] nums1 = new int[7]{7,10,21,44,45,46,47};
-        int[] nums2 = new int[7]{22,30,31,40,40,40,40};
-        ok!!
-
-        int[] nums1 = new int[4]{1,1,2,3};
-        int[] nums2 = new int[5]{1,2,2,6,7};  
-        ok!!
-
-        int[] nums1 = new int[4]{1,3,5,7};
-        int[] nums2 = new int[4]{2,3,6,8}; 
-        sol = 4
-        ok!! 
-
-        int[] nums1 = new int[4]{1,2,3,4};
-        int[] nums2 = new int[10]{1,2,3,4,5,6,7,8,8,8};
-        ok!!
-
-        int[] nums1 = new int[4]{1,2,3,4};
-        int[] nums2 = new int[8]{1,2,3,4,5,6,7,8};
-        ok!!
-
-        int[] nums1 = new int[4]{7,10,21,44};
-        int[] nums2 = new int[4]{22,30,31,40};
-        ok!!
-
-        Caso super problematico:
-        int[] nums1 = new int[1]{1};
-        int[] nums2 = new int[3]{2,3,4};
-        // Mal antes, xq sacaba la mediana de 3 numeros pero se podia seguir descartando
-
-        int[] nums1 = new int[2]{1,5};
-        int[] nums2 = new int[4]{2,3,4,6};
-        // Se acaba uno y retorna la mediana del otro pero la retorna mal
-
-        int[] nums1 = new int[2]{0,100};
-        int[] nums2 = new int[10]{1,2,3,4,5,6,7,8,9,10};
-        // super mal todo con este caso, se vacia uno y retorna mal la mediana
-
-        */
 		Solution sol = new Solution();
         int[] nums1 = new int[2]{1,5};
         int[] nums2 = new int[4]{2,3,4,6};
 
+        foreach(Tuple<int[],int[],double> case_ in answers){
+            nums1 = case_.Item1; nums2 = case_.Item2; 
+            double realSolution = case_.Item3;
+            double calculated = sol.FindMedianSortedArrays(nums1, nums2);
+            Console.WriteLine("nums1={0}    nums2={1}", printArray(nums1), printArray(nums2));
+            Console.WriteLine("real={0}   calculated={1}", realSolution, calculated);
+            Console.ReadLine();
+            if(calculated!=realSolution) break;
+            else{
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+        }
 
-        double answer = sol.FindMedianSortedArrays(nums1,nums2);
-        Console.WriteLine(answer);
+        Console.WriteLine(sol.FindMedianSortedArrays(nums1,nums2));
+
+        List<int> a = new List<int>(){1,2,3};
+        Console.WriteLine(a[1]);
 	}
 }
 
@@ -195,7 +162,7 @@ public class Solution {
             i12= findSecondLimit(i12, posmedian1, options[0,1]);
             change1 = last1!=i11 || last2!=i12;
 
-            int last1 = i11; int last2 = i12;
+            last1 = i21; last2 = i22;
             i21= findFirstLimit(i21, posmedian2, options[1,2]);
             i22= findSecondLimit(i22, posmedian2, options[1,1]);
             change2 = last1!=i21 || last2!=i22;

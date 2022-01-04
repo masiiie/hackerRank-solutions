@@ -1,0 +1,70 @@
+int[] nums1 = new int[3]{1,2,3};
+int[] nums2 = new int[4]{4,5,6,7};
+ok!!  ~ Cuando compara el 3 con el 4 este ultimo queda (3 y 3) y median(4) da true
+
+int[] nums1 = new int[1]{2};
+int[] nums2 = new int[2]{1,3};
+ok!!  ~ Se queda vacio un array y el otro con un solo candidato   
+
+int[] nums1 = new int[4]{1,3,5,7};
+int[] nums2 = new int[5]{2,4,6,8,10};
+sol = 5
+ok!!  ~ Se queda vacio un array y el otro con un solo candidato
+
+int[] nums1 = new int[8]{7,8,8,8,8,8,8,9};
+int[] nums2 = new int[26]{1,1,1,1,1,1,1,2,3,3,3,6,7,8,8,8,9,9,9,9,9,9,9,9,9,9};
+ok!!  ~ Quedan solo 2 candidatos al final
+
+int[] nums1 = new int[10]{1,1,1,1,1,1,1,1,1,1};
+int[] nums2 = new int[10]{1,1,1,1,1,1,1,1,1,1};
+ok!!
+
+int[] nums1 = new int[3]{8,8,9};
+int[] nums2 = new int[2]{8,9};
+ok!!
+
+int[] nums1 = new int[4]{1,2,3,3};
+int[] nums2 = new int[20]{1,2,3,3,3,6,7,8,8,8,9,9,9,9,9,9,9,9,9,9};
+ok!!
+
+int[] nums1 = new int[4]{7,8,8,9};
+int[] nums2 = new int[20]{1,2,3,3,3,6,7,8,8,8,9,9,9,9,9,9,9,9,9,9};
+ok!!
+
+int[] nums1 = new int[7]{7,10,21,44,45,46,47};
+int[] nums2 = new int[7]{22,30,31,40,40,40,40};
+ok!!
+
+int[] nums1 = new int[4]{1,1,2,3};
+int[] nums2 = new int[5]{1,2,2,6,7};  
+ok!!
+
+int[] nums1 = new int[4]{1,3,5,7};
+int[] nums2 = new int[4]{2,3,6,8}; 
+sol = 4
+ok!! 
+
+int[] nums1 = new int[4]{1,2,3,4};
+int[] nums2 = new int[10]{1,2,3,4,5,6,7,8,8,8};
+ok!!
+
+int[] nums1 = new int[4]{1,2,3,4};
+int[] nums2 = new int[8]{1,2,3,4,5,6,7,8};
+ok!!
+
+int[] nums1 = new int[4]{7,10,21,44};
+int[] nums2 = new int[4]{22,30,31,40};
+ok!!
+
+Caso super problematico:
+int[] nums1 = new int[1]{1};
+int[] nums2 = new int[3]{2,3,4};
+// Mal antes, xq sacaba la mediana de 3 numeros pero se podia seguir descartando
+
+int[] nums1 = new int[2]{1,5};
+int[] nums2 = new int[4]{2,3,4,6};
+// Se acaba uno y retorna la mediana del otro pero la retorna mal
+
+int[] nums1 = new int[2]{0,100};
+int[] nums2 = new int[10]{1,2,3,4,5,6,7,8,9,10};
+// super mal todo con este caso, se vacia uno y retorna mal la mediana
