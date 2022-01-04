@@ -8,15 +8,17 @@ public class Solution {
         int lastDifferent = 1;
         
         for(int i=0;i<nums.Length;i++){
-            for(int j=lastDifferent;j<nums.Length && i<lastDifferent;j++){
+            for(int j=lastDifferent;j<nums.Length && i<j;j++){
                 Console.WriteLine("i={0} j={1}",i,j);
                 if(nums[i]==nums[j]){
                     nums[j]=-1;
                     total++;
                 }
                 else{
-                    nums[i+1]=nums[j];
-                    nums[j]=-1;
+                    if(j-i>1){
+                        nums[i+1]=nums[j];
+                        nums[j]=-1;
+                    }
                     lastDifferent = j+1;
                     break;
                 }
