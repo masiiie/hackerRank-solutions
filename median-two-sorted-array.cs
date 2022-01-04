@@ -94,11 +94,6 @@ public class Solution {
         int totalLen = nums1.Length + nums2.Length;
         int umbral = totalLen%2!=0 ? (totalLen-1)/2 : totalLen/2;
         
-        Func<int,int,int> isDeprecated = (int menores,int mayores) => {
-            if(menores>umbral) return -1;
-            if(mayores>umbral) return 1;
-            return 0;
-        }; 
 
         Func<int,int,int,int> findFirstLimit =
             (int actualValue, int posmedian, int mayores) =>
@@ -194,38 +189,22 @@ public class Solution {
             else if(totalLen%2!=0 && cond2) return options[1,0];
             else if(totalLen%2==0 && cond3) return (double)(options[0,0] + options[1,0])/(double)2;
 
-            int dep1 = isDeprecated(options[0,1], options[0,2]);
-            int dep2 = isDeprecated(options[1,1], options[1,2]);
 
-            if(options[0,1]>=umbral){
-                int last = i12;
-                i12=posmedian1+dep1-dep3;
-                change1 = last!=i12;
-            }
-            else if(options[0,2]>=umbral){
-                int last = i11;
-                i11=posmedian1+dep1+dep3;
-                change1 = last!=i11;
-            }
-            else change1 = false;
+            int last1 = i11; int last2 = i12;
+            i11= findFirstLimit(i11, posmedian1, options[0,2]);
+            i12= findSecondLimit(i12, posmedian1, options[0,1]);
+            change1 = last1!=i11 || last2!=i12;
 
-            if(options[1,1]>=umbral){
-                int last = i22;
-                i22=posmedian2+dep2;
-                change2 = last!=i22;
-            }
-            else if(options[1,2]>=umbral){
-                int last = i21;
-                i21=posmedian2+dep2;
-                change2 = last!=i21;
-            }
-            else change2=false;
+            int last1 = i11; int last2 = i12;
+            i21= findFirstLimit(i21, posmedian2, options[1,2]);
+            i22= findSecondLimit(i22, posmedian2, options[1,1]);
+            change2 = last1!=i21 || last2!=i22;
         }
         return Math.Pow(-10, 7);
     }
 }
 
 /*
-            int dep3 = options[0,0]==options[1,0] && dep1==0 && 
-                ((totalLen%2==0 && !cond3) || totalLen%2!=0) ? 1 : 0;
+    int dep3 = options[0,0]==options[1,0] && dep1==0 && 
+        ((totalLen%2==0 && !cond3) || totalLen%2!=0) ? 1 : 0;
 */
