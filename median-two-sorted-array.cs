@@ -98,7 +98,15 @@ public class Solution {
             if(menores>umbral) return -1;
             if(mayores>umbral) return 1;
             return 0;
-        };   
+        }; 
+
+        Func<int,int,int,int> findFirstLimit =
+            (int actualValue, int posmedian, int mayores) =>
+            Math.Max(actualValue, posmedian - Math.Max(-1, umbral - mayores));
+
+        Func<int,int,int,int> findSecondLimit = 
+            (int actualValue, int posmedian, int menores) =>
+             Math.Min(actualValue, posmedian + Math.Max(-1, umbral - menores));
 
         Func<int,int,bool> isMedian = (int menores, int mayores) => {
             return (menores+mayores+1)==totalLen && mayores==menores;
@@ -106,11 +114,10 @@ public class Solution {
 
         Func<int[,], bool> areMedianToguether = (int[,] actualOptions) => {
             int m1 = actualOptions[0,0]; int m2 = actualOptions[1,0];
-            int men1 = actualOptions[0,1]; int men2 = actualOptions[1,1];
-            int may1 = actualOptions[0,2]; int may2 = actualOptions[1,2];
+            int men1 = actualOptions[0,1]; 
+            int may1 = actualOptions[0,2]; 
 
-            if(m1==m2 && men1==may1) return true;
-            return false;
+            return m1==m2 && men1==may1;
         };
 
         int i11=0;    int i12=nums1.Length-1;
@@ -124,8 +131,8 @@ public class Solution {
             int posmedian2 = (i21 + i22)/2;
 
             
-            Console.WriteLine("i11={0}  i12={1}", new object[2]{i11,i12});
-            Console.WriteLine("i21={0}  i22={1}", new object[2]{i21,i22});
+            Console.WriteLine("i11={0}  i12={1}", i11, i12);
+            Console.WriteLine("i21={0}  i22={1}", i21, i22);
             Console.WriteLine();
             //Console.ReadLine();
             
@@ -190,9 +197,6 @@ public class Solution {
             int dep1 = isDeprecated(options[0,1], options[0,2]);
             int dep2 = isDeprecated(options[1,1], options[1,2]);
 
-            int dep3 = options[0,0]==options[1,0] && dep1==0 && 
-                ((totalLen%2==0 && !cond3) || totalLen%2!=0) ? 1 : 0;
-
             if(options[0,1]>=umbral){
                 int last = i12;
                 i12=posmedian1+dep1-dep3;
@@ -220,3 +224,8 @@ public class Solution {
         return Math.Pow(-10, 7);
     }
 }
+
+/*
+            int dep3 = options[0,0]==options[1,0] && dep1==0 && 
+                ((totalLen%2==0 && !cond3) || totalLen%2!=0) ? 1 : 0;
+*/
