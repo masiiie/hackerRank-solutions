@@ -20,6 +20,58 @@ public class Program
             new int[4]{7,10,21,44}, 
             new int[4]{22,30,31,40}, 
             26),
+        new Tuple<int[], int[], double>(
+            new int[4]{1,2,3,4}, 
+            new int[8]{1,2,3,4,5,6,7,8}, 
+            3.5),
+        new Tuple<int[], int[], double>(
+            new int[4]{1,2,3,4}, 
+            new int[10]{1,2,3,4,5,6,7,8,8,8}, 
+            4),
+        new Tuple<int[], int[], double>(
+            new int[4]{1,3,5,7}, 
+            new int[4]{2,3,6,8}, 
+            4),
+        new Tuple<int[], int[], double>(
+            new int[4]{1,1,2,3}, 
+            new int[5]{1,2,2,6,7}, 
+            2),
+        new Tuple<int[], int[], double>(
+            new int[7]{7,10,21,44,45,46,47}, 
+            new int[7]{22,30,31,40,40,40,40}, 
+            40),
+        new Tuple<int[], int[], double>(
+            new int[4]{7,8,8,9}, 
+            new int[20]{1,2,3,3,3,6,7,8,8,8,9,9,9,9,9,9,9,9,9,9}, 
+            8),
+        new Tuple<int[], int[], double>(
+            new int[4]{1,2,3,3}, 
+            new int[20]{1,2,3,3,3,6,7,8,8,8,9,9,9,9,9,9,9,9,9,9}, 
+            8),
+        new Tuple<int[], int[], double>(
+            new int[3]{8,8,9}, 
+            new int[2]{8,9}, 
+            8),
+        new Tuple<int[], int[], double>(
+            new int[10]{1,1,1,1,1,1,1,1,1,1}, 
+            new int[10]{1,1,1,1,1,1,1,1,1,1}, 
+            1),
+        new Tuple<int[], int[], double>(
+            new int[8]{7,8,8,8,8,8,8,9}, 
+            new int[26]{1,1,1,1,1,1,1,2,3,3,3,6,7,8,8,8,9,9,9,9,9,9,9,9,9,9}, 
+            8),
+        new Tuple<int[], int[], double>(
+            new int[4]{1,3,5,7}, 
+            new int[5]{2,4,6,8,10}, 
+            5),
+        new Tuple<int[], int[], double>(
+            new int[1]{2}, 
+            new int[2]{1,3}, 
+            2),
+        new Tuple<int[], int[], double>(
+            new int[3]{1,2,3}, 
+            new int[4]{4,5,6,7}, 
+            4)
     };
 
     public static string printArray(int[] array){
@@ -30,8 +82,9 @@ public class Program
 	public static void Main()
 	{
 		Solution sol = new Solution();
-        int[] nums1 = new int[2]{1,5};
-        int[] nums2 = new int[4]{2,3,4,6};
+        int[] nums1 = new int[4]{1,2,3,4};
+        int[] nums2 = new int[8]{1,2,3,4,5,6,7,8};
+
 
         foreach(Tuple<int[],int[],double> case_ in answers){
             nums1 = case_.Item1; nums2 = case_.Item2; 
@@ -48,10 +101,7 @@ public class Program
             }
         }
 
-        Console.WriteLine(sol.FindMedianSortedArrays(nums1,nums2));
-
-        List<int> a = new List<int>(){1,2,3};
-        Console.WriteLine(a[1]);
+        Console.WriteLine("All passed!!");
 	}
 }
 
@@ -166,6 +216,11 @@ public class Solution {
             i21= findFirstLimit(i21, posmedian2, options[1,2]);
             i22= findSecondLimit(i22, posmedian2, options[1,1]);
             change2 = last1!=i21 || last2!=i22;
+
+            if(!change1 && !change2 && options[0,0]==options[1,0] && !cond3){
+                change1 = true;
+                i11+=1;
+            }
         }
         return Math.Pow(-10, 7);
     }
