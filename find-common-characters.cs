@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 public class Program
 {
@@ -13,10 +14,12 @@ public class Program
 
 public class Solution {
     public IList<string> CommonChars(string[] words) {
-        IEnumerable<char> sol = words[0].ToCharArray();
+        string sol = words[0];
 
         foreach(string x in words){
-            sol = sol.Intersect(x);
+            string toRemove = new List<char>();
+            for(int i=0;i<sol.Length;i++) if(!x.Contains(sol[i])) toRemove.Add(sol[i]);
+            
         }
 
         return sol.Select(c => c.ToString()).ToList();
