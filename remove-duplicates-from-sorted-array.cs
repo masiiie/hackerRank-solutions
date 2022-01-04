@@ -1,17 +1,25 @@
 // https://leetcode.com/problems/remove-duplicates-from-sorted-array/
 
+using System;
+
 public class Solution {
     public int RemoveDuplicates(int[] nums) {
         int total = 0;
+        int lastDifferent = 1;
         
         for(int i=0;i<nums.Length;i++){
-            if(nums[i]==-1) nums[i] = i+total<nums.Length ? nums[i+total] : -1;
-            for(int j=i+Math.Max(1,total);j<nums.Length;j++){
+            for(int j=lastDifferent;j<nums.Length && i<lastDifferent;j++){
+                Console.WriteLine("i={0} j={1}",i,j);
                 if(nums[i]==nums[j]){
                     nums[j]=-1;
                     total++;
                 }
-                else break;
+                else{
+                    nums[i+1]=nums[j];
+                    nums[j]=-1;
+                    lastDifferent = j+1;
+                    break;
+                }
             }
         }
         return nums.Length-total;
