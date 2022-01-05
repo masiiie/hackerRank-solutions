@@ -5,13 +5,16 @@ public class Solution {
     public void MoveZeroes(int[] nums) {
         int i=0;
         int j=1;
-        while(i<j && j<nums.Length){
-            while(nums[i]!=0) i++;
+        while(true){
+            while(i<nums.Length && nums[i]!=0) i++;
             j=i+1;
-            while(nums[j]==0) j++;
+            while(j<nums.Length && nums[j]==0) j++;
+            if(j>=nums.Length) break;
             Console.WriteLine("i={0} j={1}    nums={2}",i,j,printArray(nums));
             nums[i]=nums[j];
             nums[j]=0;
+            i++;
+            j++;
         }
     }
 
