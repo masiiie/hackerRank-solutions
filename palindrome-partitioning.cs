@@ -1,23 +1,39 @@
 // https://leetcode.com/problems/palindrome-partitioning/
-
+using System;
 public class Solution {
     Dictionary<string,bool> pal;
-    public IList<IList<string>> Partition(string s) {
-        Dictionay<string,IList<IList<string>>> solutions = new Dictionay<string,IList<IList<string>>>();
 
-        for(int i = 0; i<s.Length; i++) solutions[s.Substring(i,i+1)] = (IList<IList<string>>)(new List<IList<string>>(){
-            (IList<string>)(new List<string>(){s.Substring(i,i+1)})
+    public IList<IList<string>> Partition(string s) {
+        Dictionary<string,IList<IList<string>>> solution = new Dictionary<string,IList<IList<string>>>();
+        solution[""] = (IList<IList<string>>)(new List<IList<string>>(){
+            (IList<string>)(new List<string>(){})
         });
 
-        for(int i=1;i<s.Length;i++){
-            for(int j=0;j<s.Length;j++){
-                string substring = s.Substring(j,j+i+1);
-                solution[j,j+i]= new List<IList<string>>(){};
+        for(int i=1;i<=s.Length;i++){
+            //Console.WriteLine("i={0}",i);
+            for(int j=0;j<s.Length && (i+j)<=s.Length;j++){
+                //Console.WriteLine(" j={0}",j);
+                string substring = s.Substring(j,i);
+                solution[substring]= new List<IList<string>>(){};
 
+                for(int k=1; k<substring.Length;k++){
+                    //Console.WriteLine("     k={0}",k);
+                    string newp = substring.Substring(0,k);
+                    if(ispalindrome(newp)){
+                        foreach(IList<string> way in solution[substring.Substring(k, substring.Length-k)]){
+                            List<string> toAdd = new List<string>(){newp};
+                            toAdd.AddRange(way);
+                            solution[substring].Add((IList<string>)toAdd);
+                        }
+                    }
+                }
 
-                if(ispalindrome(substring)) solution[j,j+i].Add((IList<string>)(new List<string>(){substring}));
+                if(ispalindrome(substring)) solution[substring].Add((IList<string>)(new List<string>(){substring}));
+                solution[substring] = (IList<IList<string>>)solution[substring];
             }
         }
+
+        return solution[s];
     }
 
     public Solution(){
@@ -25,7 +41,7 @@ public class Solution {
     }
 
     public bool ispalindrome(string s){
-        if(pal.Contains(s)) return pal[s];
+        if(pal.ContainsKey(s)) return pal[s];
         bool answer = true;
 
         for(int i=0; i<s.Length/2; i++){
