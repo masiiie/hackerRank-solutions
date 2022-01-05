@@ -10,7 +10,6 @@ public class Solution {
             j=i+1;
             while(j<nums.Length && nums[j]==0) j++;
             if(j>=nums.Length) break;
-            Console.WriteLine("i={0} j={1}    nums={2}",i,j,printArray(nums));
             nums[i]=nums[j];
             nums[j]=0;
             i++;
