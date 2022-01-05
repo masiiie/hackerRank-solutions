@@ -17,8 +17,8 @@ public class Solution {
             Console.WriteLine("nums={0}",printArray(nums));
             Console.WriteLine();
             if((nums[i]==nums[j] && repeat==1) || nums[i]!=nums[j]){
-                if(repeat==1) repeat=0;
-                else if(nums[i]!=nums[j]) repeat=1;
+                if(nums[i]==nums[j] && repeat==1) repeat=0;
+                else repeat=1;
                 i++;
                 nums[i]=nums[j]; 
             }
