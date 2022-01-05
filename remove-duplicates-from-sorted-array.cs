@@ -4,26 +4,21 @@ using System;
 
 public class Solution {
     public int RemoveDuplicates(int[] nums) {
-        int total = 0;
-        int lastDifferent = 1;
-        
-        for(int i=0;i<nums.Length;i++){
-            for(int j=lastDifferent;j<nums.Length && i<j;j++){
-                Console.WriteLine("i={0} j={1}",i,j);
-                if(nums[i]==nums[j]){
-                    nums[j]=-1;
-                    total++;
-                }
-                else{
-                    if(j-i>1){
-                        nums[i+1]=nums[j];
-                        nums[j]=-1;
-                    }
-                    lastDifferent = j+1;
-                    break;
-                }
+        if(nums.Length==0) return 0;
+        int i = 0;
+        int j = 1;
+
+        while(j<nums.Length){
+            if(nums[i]!=nums[j]){
+                i++;
+                nums[i]=nums[j];
             }
+            else if(i!=j) nums[j]=-1;
+            
+            j++;
+            
         }
-        return nums.Length-total;
+        
+        return i+1;
     }
 }
