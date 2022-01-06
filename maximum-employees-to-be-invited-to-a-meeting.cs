@@ -23,7 +23,7 @@ public class Solution {
             int[] asientos = new int[size];
             bool[] puesto = new bool[favorite.Length];
             Array.Fill(asientos,-1);
-            Console.WriteLine("size={0}     asientos={1}     puesto={2}", size,printArray(asientos),printArray(puesto));
+            //Console.WriteLine("size={0}     asientos={1}     puesto={2}", size,printArray(asientos),printArray(puesto));
             for(int i=0;i<favorite.Length;i++){
                 asientos[0]=i;
                 puesto[i]=true;
@@ -45,7 +45,7 @@ public class Solution {
             int fav = favorite[asientos[asientos.Length-1]];
             return fav==asientos[0] || fav==asientos[index-2];
         }
-        Console.WriteLine("     index={0}       asientos={1}        puesto={2}",index,printArray(asientos),printArray(puesto)); 
+        //Console.WriteLine("     index={0}       asientos={1}        puesto={2}",index,printArray(asientos),printArray(puesto)); 
         int cand = favorite[asientos[index-1]];
         if(index-2>-1 && asientos[index-2]==cand){
             for(int i=0;i<puesto.Length;i++){
