@@ -3,11 +3,15 @@
 public class Solution {
     public void Rotate(int[] nums, int k) {
         k = k%nums.Length;
-        while(k>0){
-            int initial = nums[nums.Length-1];
-            for(int i=nums.Length-1;i>0;i--) nums[i]=nums[i-1];
-            nums[0]=initial;
-            k--;
+        int[] auxiliar = new int[nums.Length];
+
+        for(int i=0;i<k;i++){
+            auxiliar[i]=nums[i];
+            nums[i]=nums[nums.Length+i-k];
+        }
+        for(int i=k;i<nums.Length;i++){
+            auxiliar[i]=nums[i];
+            nums[i] = auxiliar[i-k];
         }
     }
 }
