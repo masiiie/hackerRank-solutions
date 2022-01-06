@@ -1,4 +1,38 @@
+using System;
+using System.Collections.Generic;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Solution solution = new Solution();
+        /*
+        int[][] trips = new int[][]{
+            new int[]{2,1,5},
+            new int[]{3,3,7},
+            new int[]{5,7,8}
+        };
+            // Ok!!
+        */
+
+        int[][] trips = new int[][]{
+            new int[]{1,1,5},
+            new int[]{1,1,5},
+            new int[]{2,2,7},
+            new int[]{3,3,7},
+            new int[]{5,7,8}
+        };
+
+        Console.WriteLine(solution.CarPooling(trips,5));  
+    }
+}
+
 public class Solution {
+    public static string printArray<T>(T[] array){
+        string sol = "{ ";
+        foreach(T item in array) sol+=item.ToString()+" ";
+        return sol+"}";
+    }
     public bool CarPooling(int[][] trips, int capacity) {
         Comparer1 comp1 = new Comparer1(); Comparer2 comp2 = new Comparer2(); 
 
@@ -12,14 +46,19 @@ public class Solution {
         int avaiable = capacity;
 
         while(up<pickUp.Count){
+            //Console.WriteLine("up={0}   pickUp={1}",up,printArray(pickUp[up]));
+            //Console.WriteLine("drop={0} pickDrop={1}",drop,printArray(pickDrop[drop]));
+            //Console.WriteLine("avaiable={0}",avaiable);
+            
             avaiable-=pickUp[up][0]; up++;
             if(avaiable<0) return false;
             else if(up==pickUp.Count) return true;
             
-            if(pickDrop[drop][2]<pickUp[up][1]){
+            while(pickDrop[drop][2]<=pickUp[up][1]){
                 avaiable+=pickDrop[drop][0];
                 drop++;
             }
+            //Console.WriteLine();
         }
         return true;
     }
