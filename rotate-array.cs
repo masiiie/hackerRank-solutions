@@ -2,8 +2,12 @@
 
 public class Solution {
     public void Rotate(int[] nums, int k) {
-        int[] sol = new int[nums.Length];
-        for(int i=0;i<nums.Length;i++) sol[i]= i-k<0 ? nums[nums.Length-k] : nums[i-k];
-        nums=sol;
+        k = k%nums.Length;
+        while(k>0){
+            int initial = nums[nums.Length-1];
+            for(int i=nums.Length-1;i>0;i--) nums[i]=nums[i-1];
+            nums[0]=initial;
+            k--;
+        }
     }
 }
