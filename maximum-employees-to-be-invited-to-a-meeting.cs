@@ -29,9 +29,9 @@ public class Solution {
         return 1;
     }
 
-    public static string printArray<T>(T[] array){
+    public static string printArray<T>(IEnumerable<T> array){
         string sol = "{ " + array[0].ToString();
-        for(int i=1;i<array.Length;i++) sol+=", "+array[i].ToString();
+        foreach(T item in array) sol+=", "+item.ToString();
         return sol+" }";
     }
 
@@ -39,23 +39,6 @@ public class Solution {
         if(index==asientos.Length) return true;
         Console.WriteLine("     index={0}       asientos={1}        puesto={2}",
             index,printArray(asientos),printArray(puesto));
-        int cand1 = index-1<0 ? favorite[favorite.Length-1] : favorite[index-1];
-        if(!puesto[cand1]){
-            asientos[index]= cand1;
-            puesto[cand1]=true;
-            if(MaximumInvitations(favorite, asientos,index+1,puesto)) return true;
-            asientos[index]=-1;
-            puesto[cand1]=false;
-        }
-
-        int cand2 = index+1==favorite.Length ? 0 : favorite[index+1];
-        if(cand1!=cand2 && !puesto[cand2]){
-            asientos[index] = cand2;
-            puesto[cand2] = true;
-            if(MaximumInvitations(favorite,asientos,index+1,puesto)) return true;
-            asientos[index]=-1;
-            puesto[cand2]=false;
-        }
-        return false;
+        
     }
 }

@@ -74,9 +74,9 @@ public class Program
             4)
     };
 
-    public static string printArray(int[] array){
+    public static string printArray<T>(IEnumerable<T> array){
         string sol = "{ " + array[0].ToString();
-        for(int i=1;i<array.Length;i++) sol+=", "+array[i].ToString();
+        foreach(T item in array) sol+=", "+item.ToString();
         return sol+" }";
     }
 	public static void Main()
