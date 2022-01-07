@@ -17,9 +17,9 @@ public class Solution {
         }
     }
 
-    public static string printArray(int[] array){
-        string sol = "{ " + array[0].ToString();
-        for(int i=1;i<array.Length;i++) sol+=", "+array[i].ToString();
-        return sol+" }";
+    public static string printArray<T>(T[] array){
+        string sol = "{ ";
+        foreach(T item in array) sol+=item.ToString()+" ";
+        return sol+"}";
     }
 }
