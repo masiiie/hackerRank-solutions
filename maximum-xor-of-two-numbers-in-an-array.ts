@@ -1,19 +1,14 @@
 /*
-
-function findMaximumXOR(nums: number[]): number {
+    function findMaximumXOR(nums: number[]): number {
     let max = 0;
-    console.log(myxor(14,92))
     for (let i = 0; i < nums.length; i++) {
       for (let j = i+1; j < nums.length; j++) {
           let xor = nums[i] ^ nums[j];
-          console.log(xor);
           max = xor>max ? xor : max;
         }
     }
     return max;
 };
-
-
 */
 
 class BST{
@@ -29,22 +24,21 @@ class BST{
         this.right = null;
     }
 
-    add(item:string):BST{
-        return this.addAux(item, 0, this);
+    add(item:string){
+        this.addAux(item, 0, this);
     }
 
-    addAux(item:string, index:number, head:BST):BST{
+    addAux(item:string, index:number, head:BST){
         if(index<item.length){
             if(item[index]=='0'){
                 if(head.left == null) head.left = new BST('0', head);
-                return this.addAux(item, index+1, head.left);
+                this.addAux(item, index+1, head.left);
             }   
             else{
                 if(head.right == null) head.right = new BST('1', head);
-                return this.addAux(item, index + 1, head.right);
+                this.addAux(item, index + 1, head.right);
             }   
         } 
-        else return head;
     }
 
 }
@@ -66,7 +60,7 @@ function miRepeat(word : string, times : number) : string{
 function searchMaxXor(value : string, tree : BST) : string{
     let index = 0;
     let maxXor = '';
-    while(index < value.length && tree!=null){
+    while(index < value.length){
         if(value[index]=='0'){
             if(tree.right!=null){
                 maxXor+= '1';
@@ -87,6 +81,7 @@ function searchMaxXor(value : string, tree : BST) : string{
                 tree = tree.right;
             }
         }
+        index+=1;
     }
 
     return maxXor;
@@ -106,24 +101,15 @@ function findMaximumXOR(nums: number[]): number {
     let toBinaryDic: { [id:string]: number; } = {};
     nums.forEach(element => {
         let tostringItem = toBinary(element);
-        console.log(`tostringItem = ${tostringItem}`);
-        toBinary[tostringItem] = element;
-        let added = tree.add(tostringItem);
-        console.log(`added = ${returnValue(added)}`);
-        console.log(`\n\n\n`)
+        toBinaryDic[tostringItem] = element;
+        tree.add(tostringItem);
     });
     let maxXor = -1;
     nums.forEach(item => {
         let head = tree;
         let current = searchMaxXor(toBinary(item), head);
-        console.log(`current = ${current}`);
         let xor = toBinaryDic[current] ^ item;
         maxXor = xor>maxXor ? xor : maxXor;
-        console.log(`maxXor = ${maxXor}`);
-        console.log(`\n`)
     });
     return maxXor;
 };
-
-
-findMaximumXOR([3,5,56,1]);
