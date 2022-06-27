@@ -19,13 +19,7 @@ class Solution {
      * @param Integer[] $inorder
      * @return TreeNode
      */
-    function buildTree($preorder, $inorder) {
-        echo "preorder:";
-        print_r($preorder);
-        echo "inorder:";
-        print_r($inorder);
-        echo "";
-        
+    function buildTree($preorder, $inorder) {        
         $N = count($preorder);
         $value = $preorder[0];
         if($N == 0) return null;
