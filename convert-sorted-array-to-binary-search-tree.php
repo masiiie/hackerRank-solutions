@@ -1,5 +1,5 @@
 /**
- * https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/
+ * https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/submissions/
  * Definition for a binary tree node.
  * class TreeNode {
  *     public $val = null;
@@ -20,11 +20,11 @@ class Solution {
      */
     function sortedArrayToBST($nums) {
         $N = count($nums);
+        if($N == 0) return null;
         if($N == 1) return new TreeNode($nums[0], null, null);
-        if($N == 2) return new TreeNode($nums[1], new TreeNode($nums[0], null, null), null);
         $middle = $N/2;
-        $sp1 = array_slice($nums,0, $middle - 1);
-        $sp2 = array_slice($nums,$middle + 1, $N - 1);
+        $sp1 = array_slice($nums,0, $middle);
+        $sp2 = array_slice($nums, $middle + 1, $N);
         $left = $this->sortedArrayToBST($sp1);
         $right = $this->sortedArrayToBST($sp2);
         $solution = new TreeNode($nums[$middle], $left, $right);
