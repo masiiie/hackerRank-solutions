@@ -20,11 +20,21 @@ class Solution {
      * @return TreeNode
      */
     function buildTree($inorder, $postorder) {
+        /*
+        echo "inorder:";
+        print_r($inorder);
+        echo "postorder:";
+        print_r($postorder);
+        
+        echo "\n";
+        */
+        
         $N = count($inorder);
         $value = end($postorder);
         if($N == 0) return null;
         if($N == 1) return new TreeNode($value, null, null);
         
+
         
         $countLeft = 0;
         for($i=0; $i<$N;$i++){
@@ -33,13 +43,13 @@ class Solution {
         }
         
         $left1 = array_slice($inorder, 0, $countLeft);
-        $right1 = array_slice($inorder, $countLeft, $N);
+        $right1 = array_slice($inorder, $countLeft + 1, $N);
         
         $left2 = array_slice($postorder, 0, $countLeft);
         $right2 = array_slice($postorder, $countLeft, $N - $countLeft - 1);
         
         $left = $this->buildTree($left1, $left2);
-        $right = $this->buildTree($right2, $right2);
+        $right = $this->buildTree($right1, $right2);
         return new TreeNode($value, $left, $right);
     }
 }
