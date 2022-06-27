@@ -21,14 +21,14 @@ class Solution {
      */
     function buildTree($inorder, $postorder) {
         $N = count($inorder);
-        $value = $postorder[$N-1];
+        $value = end($postorder);
         if($N == 0) return null;
         if($N == 1) return new TreeNode($value, null, null);
         
         
         $countLeft = 0;
         for($i=0; $i<$N;$i++){
-            if($inorder!=$value) $countLeft++;
+            if($inorder[$i]!=$value) $countLeft++;
             else break;
         }
         
@@ -39,7 +39,7 @@ class Solution {
         $right2 = array_slice($postorder, $countLeft, $N - $countLeft - 1);
         
         $left = $this->buildTree($left1, $left2);
-        $right = $this->buildTree($right1, $right2);
+        $right = $this->buildTree($right2, $right2);
         return new TreeNode($value, $left, $right);
     }
 }
