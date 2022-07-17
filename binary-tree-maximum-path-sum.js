@@ -20,7 +20,7 @@
         let p1 = Math.max(maxPathSumAux(root.left), 0);
         let p2 = Math.max(maxPathSumAux(root.right), 0);
         let maxCurr = Math.max(p1, p2) + root.val;
-        max[0] = Math.max(maxCurr, max[0]);
+        max[0] = Math.max(p1 + p2 + root.val, max[0]);
         return maxCurr;
     };
 
