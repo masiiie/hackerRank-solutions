@@ -1,27 +1,28 @@
-/**
- * @param {number[]} nums
- * @return {number[][]}
- */
- var threeSum = function(nums) {
-    let triplets = [];
-    var auxSum = function(index, curr){
-        if(curr.length == 3 && curr[0] + curr[1] + curr[2] == 0){
-            let contains = false;
-            for (let i = 0; i < triplets.length && !contains; i++) {
-                const eq = curr.includes(triplets[i][0]) && curr.includes(triplets[i][1]) && curr.includes(triplets[i][2]); 
-                if(eq) contains = true;
-            }
-            if(!contains) triplets.push(curr.slice());
-        }
-        else{
-            if(index == nums.length) return;
-            curr.push(nums[index]);
-            auxSum(index + 1, curr);
-            curr.pop(nums[index]);
-            auxSum(index + 1, curr);
-        }
-    };
+var threeSum = function(nums) {
+	nums.sort((a,b) => a-b)
+	const result=[]
 
-    auxSum(0, []);
-    return triplets;
+	if(nums.length < 3) return result
+
+	for(let i=0; i< nums.length; i++){
+		let left = i+1
+		let right = nums.length-1
+		if(i > 0 && nums[i] === nums[i-1]) continue
+		while(left < right){
+			let sum = nums[i] + nums[left] + nums[right]
+
+			if(sum===0){
+				let arr=[nums[i], nums[left], nums[right]]
+				result.push(arr)
+				left++
+				while(nums[left] === nums[left-1] && left < right) left++
+			}else if(sum > 0){
+				right--
+			}else{
+				left++
+			}
+		}
+	}
+
+	return result
 };
