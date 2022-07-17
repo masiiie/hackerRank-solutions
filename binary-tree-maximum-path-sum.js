@@ -27,5 +27,3 @@
     maxPathSumAux(root, max);
     return max[0];
 };
-
-
