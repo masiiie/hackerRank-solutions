@@ -1,13 +1,9 @@
-/**
- * @param {number[]} nums
- * @param {number} target
- * @return {number[]}
- */
- var twoSum = function(nums, target) {
-     for (let i = 0; i < nums.length; i++) {
-         for (let j = i + 1; j < nums.length; j++) {
-            if(nums[i] + nums[j] == target) return [i,j];
-         } 
-     }  
-     return [];
-};
+var twoSum = function(nums, target) {
+    var map = new Map();
+  
+    for(var i = 0; i<nums.length; i++) {
+        var num = nums[i];
+        if(map.get(num) === undefined) map.set(target-num, i);
+        else return [map.get(num), i];
+    }
+  };
