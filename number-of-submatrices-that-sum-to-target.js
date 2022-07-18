@@ -1,31 +1,26 @@
-/**
- * @param {number[][]} matrix
- * @param {number} target
- * @return {number}
- */
- var numSubmatrixSumTarget = function(matrix, target) {
-    let hashTable = {}; 
-    let noSub = 0;
-
-    var funAux = function(x1, x2, y1, y2){
-        if(x1 == x2 && y1 == y2) if(matrix[x1][y1] == target) noSub++
-        else if(x1 > x2 || y1 > y2 || x1 < 0 || y1 < 0 || x2 > matrix.length -1 || y2 > matrix[0].length -1) return;
-        else if((x1, x2, y1, y2) in hashTable) return;
-        else{
-            funAux(x1 + 1, x2, y1, y2);
-            funAux(x1 + 1, x2 + 1, y1 + 1, y2);
-            funAux(x1 + 1, x2 + 1, y1 + 1, y2 + 1);
-            funAux(x1 + 1, x2 + 1, y1 + 1, y2 + 1);
-            funAux(x1 + 1, x2 + 1, y1, y2);
-
-            let tuple = [x1, x2, y1, y2];
-
-            for (let i = 0; i < 4; i++) {
-                
+var numSubmatrixSumTarget = function(matrix, target) {
+    const prefixSums = new Array(matrix.length + 1)
+        .fill()
+        .map(() => new Array(matrix[0].length + 1).fill(0));
+    
+    for (let i = 1; i <= matrix.length; i++) {
+        for (let j = 1; j <= matrix[0].length; j++) {
+            prefixSums[i][j] = matrix[i-1][j-1] + prefixSums[i-1][j] + prefixSums[i][j-1] - prefixSums[i-1][j-1];
+        }
+    }
+    
+    let count = 0;
+    for (let r1 = 1; r1 <= matrix.length; r1++) {
+        for (let r2 = r1; r2 <= matrix.length; r2++) {
+            const counts = {};
+            counts[0] = 1;
+            for (let c = 1; c <= matrix[0].length; c++) {
+                const sum = prefixSums[r2][c] - prefixSums[r1 - 1][c];
+                count += counts[sum - target] || 0;
+                counts[sum] = (counts[sum] || 0) + 1;
             }
         }
-    };
-
-    funAux(0, matrix.length-1, 0, matrix[0].length - 1);
-    return noSub;
+    }
+    
+    return count;
 };
