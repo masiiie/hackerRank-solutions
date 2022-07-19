@@ -10,25 +10,37 @@
  * @return {ListNode}
  */
  var mergeKLists = function(lists) {
-    let heap = []; // ver como es esto
+    if(lists.length == 0) return new ListNode()
+    if(lists.length == 1) return lists[0]
+
+    let N = Math.trunc(lists.length/2) 
+    let p1 = mergeKLists(lists.slice(0, N))
+    let p2 = mergeKLists(lists.slice(N))
+
+    return merge(p1, p2)
+};
+
+
+var merge = function(l1, l2){
     let sol = new ListNode()
     let solHead = sol
 
-    for (let i = 0; i < lists.length; i++) {
-        if(lists[i] != null) heap.push((lists[i].val, i));
-    }
+    while(l1 && l2){
+        if(l1.val < l2.val){
+            solHead.val = l1.val
+            l1 = l1.next
+        }
+        else{
+            solHead.val = l2.val
+            l2 = l2.next
+        }
 
-    while(heap.length > 0){
-        let current = heap.pop()
-        solHead.val = current[0]
         solHead.next = new ListNode()
         solHead = solHead.next
-
-        const idx = current[1]
-        lists[idx] = lists[idx].next
-        if(lists[idx] != null) heap.push((lists[idx].val, idx))
     }
+    
+    if(l1) solHead = l1
+    if(l2) solHead = l2
 
-    solHead.next= null
     return sol
-};
+}
