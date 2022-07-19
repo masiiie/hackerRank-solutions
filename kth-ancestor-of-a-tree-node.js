@@ -5,6 +5,7 @@
  var TreeAncestor = function(n, parent) {
     this.parent = parent
     this.n = n
+    this.ancestors = new Array(n).fill(0).map(() => new Array(n).fill(0));
 };
 
 /** 
@@ -13,13 +14,18 @@
  * @return {number}
  */
 TreeAncestor.prototype.getKthAncestor = function(node, k) {
+    if(this.ancestors[(node, k)] != undefined) return this.ancestors[(node, k)]
     let sol = -1
     let index = node
+    let i = 0
 
-    while(k > 0 && index > -1){
+    while(i < k){
+        if(this.ancestors[(node, k)] != undefined) return this.ancestors[(node, k)]
         sol = this.parent[index]
+        if(sol === -1) return -1
         index = sol
-        k--
+        i++
+        if(this.ancestors[(node, i)] != undefined) return this.ancestors[(node, i)]
     }
 
     return sol;
