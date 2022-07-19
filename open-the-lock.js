@@ -5,27 +5,34 @@
  */
  var openLock = function(deadends, target) {
     var calculateNext = function(char, mov){
+       if(char == '0' && mov == -1) return '9'
+       if(char == '9' && mov == 1) return '1'
        return String.fromCharCode(char.charCodeAt(0) + mov); 
     }
     
-    var openLockAux = function(node, steps){
-        if(node == target) return steps;
-        if(deadends.includes(node)) return Infinity;
-        let sol = Infinity
-        
-        for(let i = 0; i < 4; i++){
-            let newNode = node.slice(0, i) + calculateNext(node[i]) + node.slice(i+1, 4);
-            let ans1 = openLockAux(newNode, steps + 1)
-            sol = Math.min(sol, ans1)
+    let queue = ['0000']
+    let visited = ['0000']
+    let turns = 0
+    const movs = [1,-1]
 
-            newNode = node.slice(0, i) + calculateNext(node[i], -1) + node.slice(i+1, 4);
-            ans1 = openLockAux(newNode, steps + 1)
-            sol = Math.min(sol, ans1)
+    while(queue.length){
+        const next = []
+        for(let node of queue){
+            if(node === target) return turns
+            if(deadends.includes(node)) continue
+            for(let i = 0; i < 4; i++){
+                movs.forEach(mov => {
+                    let newNode = node.slice(0, i) + calculateNext(node[i], mov) + node.slice(i+1, 4);
+                    if(!visited.includes(newNode)){
+                        visited.push(newNode)
+                        next.push(newNode)
+                    }
+                })
+            }
         }
+        turns++
+        queue = next
     }
-
-    let answer = openLockAux('0000', 0);
-    answer = answer == Infinity ? -1 : answer
     
-    return answer
+    return -1
 };
