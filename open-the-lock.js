@@ -11,7 +11,7 @@
     }
     
     let queue = ['0000']
-    let visited = ['0000']
+    let visited = new Set(['0000'])
     let turns = 0
     const movs = [1,-1]
 
@@ -23,8 +23,8 @@
             for(let i = 0; i < 4; i++){
                 movs.forEach(mov => {
                     let newNode = node.slice(0, i) + calculateNext(node[i], mov) + node.slice(i+1, 4);
-                    if(!visited.includes(newNode)){
-                        visited.push(newNode)
+                    if(!visited.has(newNode)){
+                        visited.add(newNode)
                         next.push(newNode)
                     }
                 })
