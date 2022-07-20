@@ -13,11 +13,11 @@
         for (let i = 0; i < wordDict.length; i++) {
             let word = wordDict[i]
             //console.log(`next: ${s.slice(idx, word.length)}  word: ${word}  idx: ${idx}`)
-            if(s.slice(idx, idx + word.length) == word && !falsePaths.has((idx, i))){
+            if(s.slice(idx, idx + word.length) == word && !falsePaths.has((idx, path.concat([i])))){
                 path.push(i)
                 let ans = aux(idx + word.length)
                 if(ans) return ans
-                falsePaths.add((idx,i))
+                falsePaths.add((idx,Array.from(path)))
                 path.pop()
             }
         }
