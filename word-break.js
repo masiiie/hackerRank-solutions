@@ -4,17 +4,18 @@
  * @return {boolean}
  */
  var wordBreak = function(s, wordDict) {
-    falsePaths = new Set()
+    let falsePaths = new Set()
+    let path = []
     
-    var aux = function(idx, path){
+    var aux = function(idx){
         if(idx == s.length) return true
 
         for (let i = 0; i < wordDict.length; i++) {
-            const word = wordDict[i]
-            //console.log(`next: ${s.slice(idx, word.length)}  idx: ${idx}`)
-            if(s.slice(idx, word.length) == word && !falsePaths.has((idx, i))){
+            let word = wordDict[i]
+            //console.log(`next: ${s.slice(idx, word.length)}  word: ${word}  idx: ${idx}`)
+            if(s.slice(idx, idx + word.length) == word && !falsePaths.has((idx, i))){
                 path.push(i)
-                const ans = aux(idx + word.length, path)
+                let ans = aux(idx + word.length)
                 if(ans) return ans
                 falsePaths.add((idx,i))
                 path.pop()
