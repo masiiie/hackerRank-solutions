@@ -6,8 +6,7 @@
   const N = board.length
 
   var aux = function(x, y){
-    let next = null
-    
+    let next = null    
     for (let i = x; i < N && next==null; i++) {
         for (let j = 0; j < N && next==null; j++)  if(board[i][j] == '.') next = [i,j]
     }
