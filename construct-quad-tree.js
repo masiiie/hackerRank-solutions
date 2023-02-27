@@ -36,23 +36,13 @@ var construct = function(grid) {
   topRight = construct(topRight);
   bottomLeft = construct(bottomLeft);
   bottomRight = construct(bottomRight);
+
+  let leaf = 
+    topLeft.isLeaf && topRight.isLeaf && bottomLeft.isLeaf && bottomRight.isLeaf
+    && topLeft.val == topRight.val 
+    && topLeft.val == bottomLeft.val 
+    && topLeft.val == bottomRight.val; 
   
-
-  let rt = new Node();
-  rt.isLeaf = topLeft.val == topRight.val && topLeft.val == bottomLeft.val && topLeft.val == bottomRight.val;
-  if(rt.isLeaf) {
-    rt.val = topLeft.val;
-    rt.topLeft = null;
-    rt.topRight = null;
-    rt.bottomLeft = null;
-    rt.bottomRight = null;
-  } else {
-    rt.val = 1;
-    rt.topLeft = topLeft;
-    rt.topRight = topRight;
-    rt.bottomLeft = bottomLeft;
-    rt.bottomRight = bottomRight;
-  }
-
-  return rt;
+  if(leaf) return new Node(topLeft.val, true, null, null, null, null);
+  else return new Node(1, false, topLeft, topRight, bottomLeft, bottomRight);
 };
