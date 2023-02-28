@@ -27,8 +27,8 @@ var auxFun = function(tree, frecs, dupl) {
 
     let serialization = left + ',' + right + ',' + tree.val;
     
-    if(serialization in frecs && frecs[serialization] == 1) {
-        dupl.push(tree);
+    if(serialization in frecs) {
+        if(frecs[serialization] == 1) dupl.push(tree);
         frecs[serialization]++;
     } else frecs[serialization] = 1;
 
